@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de imagenes</title>
+    <link rel="stylesheet" href="{% static 'css/gestion.css' %}">
+</head>
+<body>
+    <h1>Gestión de imágenes</h1>
+    
+    {% for imagen in imagenes %}
+        <div>
+            <img src="{{ imagen.imagen.url }}" alt="Imagen">
+            <form action="{% url 'delete_image' imagen.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Borrar</button>
+            </form>
+        </div>
+    {% endfor %}
+    <button class="w3-btn w3-round-xlarge-purple">Click me</button>
+    
+    <a href="{% url 'upload' %}"><button type="button" class="btn custom-indigo">Volver a subir imagen</button></a>
+</body>
+</html>

@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #232323;
+    font-family: Arial, sans-serif;
+    color: #fff;
+  }
+  #body-upload {
+    text-align: center;
+    background-color: #232323;
+    color: #fff;
+    margin-top: 20px; /* Ajusta este valor según tu preferencia */
+  }
+  .buttons-container {
+    margin-top: 100px; /* Ajusta este valor según tu preferencia */
+  }
+  .subir-imagen-container{
+    margin-top: 220px;
+  }
+  .buttons-container > * {
+    margin-right: 20px; /* Espacio entre los elementos dentro de .buttons-container */
+  }

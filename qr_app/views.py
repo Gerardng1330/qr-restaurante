@@ -3,17 +3,37 @@ import qrcode
 from io import BytesIO
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template.loader import get_template
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404
+from .models import Imagen
+from django.contrib import messages
 
-def menu(request):
-    return render(request,'menu.html')
+def gestion_de_imagenes(request):
+    return render(request,'gestion_de_imagenes.html')
 
-def pagina(request):
-    return render(request,'inicio.html')
+def codigo_qr(request):
+    return render(request,'codigo_qr.html')
 
-def generate_qr_code_view(request):
-   redirect_url = "https://www.google.com"
-   return redirect(redirect_url)
+def upload(request):
+    return render(request,'upload.html')
+
+def upload_view(request):
+    if request.method == 'POST' and 'image' in request.FILES:
+        uploaded_image = request.FILES['image']
+        imagen = Imagen(imagen=uploaded_image)
+        imagen.save()
+        messages.success(request, 'La imagen se subió correctamente.')
+    else:
+        messages.error(request, 'No se pudo subir la imagen.')
+    return render(request, 'upload.html')
+
+def delete_image(request, imagen_id):
+    imagen = get_object_or_404(Imagen, id=imagen_id)
+    imagen.delete()
+    return redirect('gestion_de_imagenes.html')
+
+def image_management_view(request):
+    imagenes = Imagen.objects.all()
+    return render(request, 'gestion_de_imagenes.html', {'imagenes': imagenes})
 
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR
