@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}">
     <title>Subir imagen</title>
   </head>
   
@@ -22,7 +23,7 @@
       </div>
 
       <br>
-      <input id="subor-imagen" type="submit" value="Subir imagen">
+      <button id="subor-imagen" type="submit" class="btn btn-light">Subir imagen</button>
       <a href="/gestion-de-imagenes"><button type="button" id="upload-button" class="btn btn-success">Ir a la gestión de imágenes</button></a>        
     </form>   
     {% if messages %}

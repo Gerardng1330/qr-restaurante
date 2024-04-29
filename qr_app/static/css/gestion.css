@@ -22,3 +22,22 @@ body {
     background-color: #4c00cb; /* Color más oscuro al pasar el mouse */
     border-color: #4c00cb;
 }
+/* Estilos para el contenedor de imágenes */
+.image-container {
+    position: relative;
+    margin-bottom: 20px; /* Espacio entre cada imagen */
+}
+
+/* Estilos para el contador */
+.image-counter {
+    position: absolute;
+    top: 10px; /* Distancia desde arriba */
+    left: 10px; /* Distancia desde la izquierda */
+    background-color: #f3e8c0; /* Color crema */
+    padding: 5px 10px; /* Padding interno */
+    border-radius: 5px; /* Bordes redondeados */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    font-size: 14px; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+    color: #333; /* Color del texto */
+}
