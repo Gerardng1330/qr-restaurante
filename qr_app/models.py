@@ -11,3 +11,6 @@ class Imagen(models.Model):
     imagen = models.ImageField(upload_to='imagenes/')
 
 
+class LoginForm(models.Model):
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)

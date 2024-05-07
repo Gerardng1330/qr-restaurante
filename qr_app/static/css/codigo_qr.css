@@ -1,19 +1,12 @@
-
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #010101;
+/* Código CSS */
+body {
+    background: #1c1b1a; /* Aquí se aplica el color de fondo al body */
 }
 
-.contenedor{
-    width: 200px;
-    height: 200px;
-    background-color: lightblue;
-    text-align: center;
-}
-.qr-contenedor{
-    background-color: blue;
+.grid {
+    display: grid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    height: 100vh; /* Esto establece la altura de la cuadrícula al 100% del viewport */
+    place-items: center; /* Esto centra vertical y horizontalmente los elementos dentro de la cuadrícula */
 }

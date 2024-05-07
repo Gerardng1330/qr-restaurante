@@ -9,6 +9,24 @@ from django.contrib import messages
 from PIL import Image
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
+
+def login_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # Las credenciales son correctas, redirige a una página HTML
+            return render(request, 'choose_file.html')
+        else:
+            # Las credenciales son incorrectas, recarga la misma páginap
+            messages.error(request, 'Usuario o contraseña incorrectos.')
+            return redirect(request.path_info)
+    else:
+        # Si el método no es POST, simplemente renderiza el formulario
+        return render(request, 'login.html')
 
 def gestion_de_imagenes(request):
     return render(request,'gestion_de_imagenes.html')
@@ -19,6 +37,8 @@ def codigo_qr(request):
 def upload(request):
     return render(request,'upload.html')
 
+def login_view(request):
+    return render(request, 'login.html')
 
 def upload_view(request):
     if request.method == 'POST' and 'image' in request.FILES:

@@ -5,13 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Código QR</title>
+    <title>Código qr</title>
     <link rel="stylesheet" href="{% static 'css/codigo_qr.css' %}">
     <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Código QR</h1>
+    <div class="grid">
         <div class="qr-container">
             <img src="{% url 'qr_code_view' %}" alt="Código QR" class="qr-code">
         </div>

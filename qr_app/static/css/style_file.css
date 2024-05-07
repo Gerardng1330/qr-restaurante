@@ -1,0 +1,40 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #000; /* Fondo negro */
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #161515; /* Cambia el color de fondo según tu preferencia */
+}
+
+.overlay {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajusta el tamaño de los logos */
+    gap: 150px; /* Espacio entre los logos */
+    max-width: 80%; /* Ancho máximo del grid */
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.overlay img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px; /* Bordes redondeados para los logos */
+    transition: transform 0.3s ease; /* Transición suave de 0.3 segundos */
+}
+
+.overlay img:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al 110% al pasar el cursor por encima */
+}
+.overlay a {
+    display: block; /* Para que los enlaces ocupen todo el espacio del contenedor */
+}
