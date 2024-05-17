@@ -12,8 +12,8 @@
 <body>
     <div class="container">
         <div class="overlay">
-            <a href="gestion_de_imagenes.html"><img src="{% static 'img/muelle.png' %}" alt="Logo 1"></a>
-            <a href="gestion_de_imagenes.html"><img src="{% static 'img/galipan.png' %}" alt="Logo 2"></a>
+            <a href="{% url 'upload' %}"><img src="{% static 'img/muelle.png' %}" alt="Logo 1"></a>
+            <a href="{% url 'upload' %}"><img src="{% static 'img/galipan.png' %}" alt="Logo 2"></a>
             <!-- Agrega más logos según sea necesario -->
         </div>
     </div>

@@ -11,6 +11,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 
 def login_password(request):
     if request.method == 'POST':
@@ -30,6 +31,9 @@ def login_password(request):
 
 def gestion_de_imagenes(request):
     return render(request,'gestion_de_imagenes.html')
+
+def panel(request):
+    return render(request,'panel.html')
 
 def codigo_qr(request):
     return render(request,'codigo_qr.html')
