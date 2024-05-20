@@ -1,43 +1,75 @@
 body {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #232323;
+    margin: 0;
     font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
     color: #fff;
+    background-color: #232323;
 }
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #444;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+.sidebar-btn {
+    width: 150px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.sidebar-btn:hover {
+    background-color: #666;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    flex: 1;
+}
+
 .custom-indigo {
     background-color: #6610f2;
-    /* Otros estilos opcionales */
-    color: white; /* Texto en color blanco para contrastar con el fondo */
+    color: white;
+    border-color: #6610f2;
     font-family: Arial, sans-serif;
-
-    border-color: #6610f2; /* Color del borde */
 }
 
-/* Opcional: Cambiar el color del botón cuando se le pasa el mouse */
 .custom-indigo:hover {
-    background-color: #4c00cb; /* Color más oscuro al pasar el mouse */
+    background-color: #4c00cb;
     border-color: #4c00cb;
 }
-/* Estilos para el contenedor de imágenes */
+
 .image-container {
     position: relative;
-    margin-bottom: 20px; /* Espacio entre cada imagen */
+    margin-bottom: 20px;
 }
 
-/* Estilos para el contador */
 .image-counter {
     position: absolute;
-    top: 10px; /* Distancia desde arriba */
-    left: 10px; /* Distancia desde la izquierda */
-    background-color: #f3e8c0; /* Color crema */
-    padding: 5px 10px; /* Padding interno */
-    border-radius: 5px; /* Bordes redondeados */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    font-size: 14px; /* Tamaño de fuente */
-    font-weight: bold; /* Texto en negrita */
-    color: #333; /* Color del texto */
+    top: 10px;
+    left: 10px;
+    background-color: #f3e8c0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
 }
