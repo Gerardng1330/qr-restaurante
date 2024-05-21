@@ -12,6 +12,9 @@ import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 def login_password(request):
     if request.method == 'POST':
@@ -31,19 +34,48 @@ def login_password(request):
 
 def gestion_de_imagenes(request):
     if request.method == 'POST':
-        upload_type = request.POST.get('uploadType')
-        image = request.FILES.get('image')
-        
-        if upload_type == 'Gallipan':
-            nueva_imagen = Imagen(imagen=image)
-            nueva_imagen.save()
-            messages.success(request, 'Imagen subida a Gallipan con éxito')
-        elif upload_type == 'Muelle':
-            nueva_imagen = ImagenMuelle(imagen_muelle=image)
-            nueva_imagen.save()
-            messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
-        else:
-            messages.error(request, 'Tipo de subida desconocido')
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            upload_type = request.POST.get('uploadType')
+            if upload_type == 'Gallipan':
+                imagen = get_object_or_404(Imagen, id=imagen_id)
+                imagen.delete()
+                messages.success(request, 'Imagen de Gallipan eliminada con éxito')
+            elif upload_type == 'Muelle':
+                imagen_muelle = get_object_or_404(ImagenMuelle, id=imagen_id)
+                imagen_muelle.delete()
+                messages.success(request, 'Imagen de Muelle Restaurante eliminada con éxito')
+            else:
+                messages.error(request, 'Tipo de eliminación desconocido')
+        elif 'image' in request.FILES:
+            upload_type = request.POST.get('uploadType')
+            uploaded_image = request.FILES['image']
+            
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                
+                if upload_type == 'Gallipan':
+                    nueva_imagen = Imagen(imagen=temp_uploaded_image)
+                    nueva_imagen.save()
+                    messages.success(request, 'Imagen subida a Gallipan con éxito')
+                elif upload_type == 'Muelle':
+                    nueva_imagen = ImagenMuelle(imagen_muelle=temp_uploaded_image)
+                    nueva_imagen.save()
+                    messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
+                else:
+                    messages.error(request, 'Tipo de subida desconocido')
+                
+                temp_image.close()
+                os.remove(temp_image_path)
         
         return redirect('gestion-de-imagenes')
     
@@ -53,8 +85,7 @@ def gestion_de_imagenes(request):
         'imagenes': imagenes,
         'imagenesMuelle': imagenes_muelle,
     }
-    return render(request, 'nombre_de_tu_template.html', context)
-
+    return render(request, 'gestion_de_imagenes.html', context)
 
 def panel(request):
     return render(request,'panel.html')
@@ -111,9 +142,30 @@ def image_management_view2(request):
     imagenes = Imagen.objects.all()
     return render(request, 'menu.html', {'imagenes': imagenes})
 
-def delete_image(request, imagen_id):
-    imagen = get_object_or_404(Imagen, id=imagen_id)
-    imagen.delete()
+@csrf_exempt
+def delete_image(request):
+    if request.method == 'POST' and request.is_ajax():
+        imagen_id = request.POST.get('imagen_id')
+        upload_type = request.POST.get('upload_type')
+
+        try:
+            if upload_type == 'Gallipan':
+                imagen = get_object_or_404(Imagen, id=imagen_id)
+            elif upload_type == 'Muelle':
+                imagen = get_object_or_404(ImagenMuelle, id=imagen_id)
+            else:
+                return JsonResponse({'success': False, 'error': 'Tipo de imagen no reconocido'})
+
+            imagen.delete()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+def delete_image_muelle(request, imagen_id):
+    imagen_muelle = get_object_or_404(Imagen, id=imagen_id)
+    imagen_muelle.delete()
     return redirect('image_management_view')
 
 def image_management_view(request):

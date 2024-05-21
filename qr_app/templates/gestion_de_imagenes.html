@@ -12,24 +12,8 @@
 </head>
 <body>
     <div class="sidebar">
-        <button class="sidebar-btn" onclick="showContent('content1', 'Gallipan')">Gallipan</button>
-        <button class="sidebar-btn" onclick="showContent('content2', 'Muelle')">Muelle Restaurante</button>
-        <form id="uploadForm" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" id="uploadType" name="uploadType" value="Gallipan">
-            <div class="mb-3">
-                <input class="form-control" type="file" id="formFile" name="image" accept=".jpg">
-            </div>
-            <br>
-            <button id="subir-imagen" type="submit" class="btn btn-light">Subir imagen</button>
-        </form>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        <button class="sidebar-btn" onclick="showContent('content1')">Gallipan</button>
+        <button class="sidebar-btn" onclick="showContent('content2')">Muelle Restaurante</button>
     </div>
 
     <div id="content1" class="main-content">
@@ -38,15 +22,24 @@
         <div class="image-container">
             <div class="image-counter">{{ forloop.counter }}</div>
             <img src="{{ imagen.imagen.url }}" alt="Imagen">
-            <form action="{% url 'delete_image' imagen.id %}" method="POST">
+            <form action="{% url 'gestion-de-imagenes' %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
+                <input type="hidden" name="uploadType" value="Gallipan">
                 <button type="submit" class="btn btn-danger">Borrar</button>
             </form>
         </div>
         {% endfor %}
         <br>
-        <a href="{% url 'upload' %}" class="btn custom-indigo">Volver a subir imagen</a>
-        <a href="{% url 'menu' %}" class="btn custom-indigo">Ver</a>
+        <form id="uploadFormGallipan" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="uploadType" value="Gallipan">
+            <div class="mb-3">
+                <input class="form-control" type="file" name="image" accept=".jpg, .jpeg, .png">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-light">Subir imagen</button>
+        </form>
     </div>
 
     <div id="content2" class="main-content" style="display: none;">
@@ -55,26 +48,34 @@
         <div class="image-container">
             <div class="image-counter">{{ forloop.counter }}</div>
             <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen">
-            <form action="{% url 'delete_image_muelle' imagenMuelle.id %}" method="POST">
+            <form action="{% url 'gestion-de-imagenes' %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
+                <input type="hidden" name="uploadType" value="Muelle">
                 <button type="submit" class="btn btn-danger">Borrar</button>
             </form>
         </div>
         {% endfor %}
         <br>
-        <a href="{% url 'upload' %}" class="btn custom-indigo">Volver a subir imagen</a>
-        <a href="{% url 'menu' %}" class="btn custom-indigo">Ver</a>
+        <form id="uploadFormMuelle" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="uploadType" value="Muelle">
+            <div class="mb-3">
+                <input class="form-control" type="file" name="image" accept=".jpg, .jpeg, .png">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-light">Subir imagen</button>
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        function showContent(contentId, uploadType) {
+        function showContent(contentId) {
             var contents = document.querySelectorAll('.main-content');
             contents.forEach(function(content) {
                 content.style.display = 'none';
             });
             document.getElementById(contentId).style.display = 'block';
-            document.getElementById('uploadType').value = uploadType;
         }
     </script>
 </body>
