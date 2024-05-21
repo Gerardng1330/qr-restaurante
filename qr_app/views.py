@@ -4,7 +4,7 @@ from io import BytesIO
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template.loader import get_template
 from django.shortcuts import redirect,get_object_or_404
-from .models import Imagen
+from .models import Imagen, ImagenMuelle
 from django.contrib import messages
 from PIL import Image
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -30,7 +30,31 @@ def login_password(request):
         return render(request, 'login.html')
 
 def gestion_de_imagenes(request):
-    return render(request,'gestion_de_imagenes.html')
+    if request.method == 'POST':
+        upload_type = request.POST.get('uploadType')
+        image = request.FILES.get('image')
+        
+        if upload_type == 'Gallipan':
+            nueva_imagen = Imagen(imagen=image)
+            nueva_imagen.save()
+            messages.success(request, 'Imagen subida a Gallipan con éxito')
+        elif upload_type == 'Muelle':
+            nueva_imagen = ImagenMuelle(imagen_muelle=image)
+            nueva_imagen.save()
+            messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
+        else:
+            messages.error(request, 'Tipo de subida desconocido')
+        
+        return redirect('gestion-de-imagenes')
+    
+    imagenes = Imagen.objects.all()
+    imagenes_muelle = ImagenMuelle.objects.all()
+    context = {
+        'imagenes': imagenes,
+        'imagenesMuelle': imagenes_muelle,
+    }
+    return render(request, 'nombre_de_tu_template.html', context)
+
 
 def panel(request):
     return render(request,'panel.html')
