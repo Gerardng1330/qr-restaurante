@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    
+}
+.imagenes{
+    position: absolute;
+    display: flex;
+}

@@ -138,6 +138,22 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+LOGIN_URL = 'login_password'
+
+# settings.py
+
+# Tiempo de inactividad de la sesión en segundos (opcional)
+SESSION_COOKIE_AGE = 1209600  # Dos semanas (en segundos)
+
+# Establece la cookie de sesión solo para conexiones seguras
+SESSION_COOKIE_SECURE = True
+
+# Si quieres que la sesión termine cuando el navegador se cierra
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Asegúrate de que las sesiones no expiren si el navegador está cerrado
+SESSION_SAVE_EVERY_REQUEST = True
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

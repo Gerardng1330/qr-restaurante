@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth import authenticate, login, logout
 
 def login_password(request):
     if request.method == 'POST':
@@ -22,16 +22,15 @@ def login_password(request):
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
-            # Las credenciales son correctas, redirige a una página HTML
-            return render(request, 'choose_file.html')
+            login(request, user)
+            return redirect('gestion-de-imagenes')  # Redirige a la página de gestión de imágenes
         else:
-            # Las credenciales son incorrectas, recarga la misma páginap
             messages.error(request, 'Usuario o contraseña incorrectos.')
             return redirect(request.path_info)
     else:
-        # Si el método no es POST, simplemente renderiza el formulario
         return render(request, 'login.html')
 
+@login_required
 def gestion_de_imagenes(request):
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
@@ -87,8 +86,13 @@ def gestion_de_imagenes(request):
     }
     return render(request, 'gestion_de_imagenes.html', context)
 
+def logout_view(request):
+    logout(request)
+    return redirect('login_password')
+
+@login_required
 def panel(request):
-    return render(request,'panel.html')
+    return render(request,'choose_file.html')
 
 def codigo_qr(request):
     return render(request,'codigo_qr.html')

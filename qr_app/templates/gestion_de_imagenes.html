@@ -14,6 +14,8 @@
     <div class="sidebar">
         <button class="sidebar-btn" onclick="showContent('content1')">Gallipan</button>
         <button class="sidebar-btn" onclick="showContent('content2')">Muelle Restaurante</button>
+        <a href="{% url 'logout' %}">Cerrar sesión</a>
+
     </div>
 
     <div id="content1" class="main-content">
@@ -40,6 +42,11 @@
             <br>
             <button type="submit" class="btn btn-light">Subir imagen</button>
         </form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <div id="content2" class="main-content" style="display: none;">
@@ -66,6 +73,14 @@
             <br>
             <button type="submit" class="btn btn-light">Subir imagen</button>
         </form>
+        <div class="btn ver">
+            <a href="/menu"><button type="sucess">Ver Menu</button></a>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
