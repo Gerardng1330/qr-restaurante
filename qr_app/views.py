@@ -167,6 +167,7 @@ def delete_image(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
+
 def delete_image_muelle(request, imagen_id):
     imagen_muelle = get_object_or_404(Imagen, id=imagen_id)
     imagen_muelle.delete()

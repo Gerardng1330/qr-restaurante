@@ -64,7 +64,9 @@ ROOT_URLCONF = 'qr_main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR,'frontend')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,7 +137,7 @@ MESSAGE_TAGS = {
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'qr_app/static'),
+     os.path.join(BASE_DIR,'frontend')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
 

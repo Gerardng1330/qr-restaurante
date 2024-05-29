@@ -10,80 +10,84 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/gestion.css' %}">
 </head>
-<body class="bg-gray-900 text-white flex flex-col items-center h-screen">
-    <div class="flex flex-col items-center mt-4">
-        <button class="bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content1')">Gallipan</button>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content2')">Muelle Restaurante</button>
-        <a href="{% url 'logout' %}" class="text-white mt-2">Cerrar sesión</a>
+<body class="bg-gray-900 text-white flex h-screen">
+    <!-- Sidebar -->
+    <div class="w-64 bg-gray-800 p-4 flex flex-col items-center">
+        <button class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content1')">Gallipan</button>
+        <button class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content2')">Muelle Restaurante</button>
+        <a href="{% url 'logout' %}" class="w-full text-center bg-red-500 text-white px-4 py-2 rounded m-2 hover:bg-red-600">Cerrar sesión</a>
     </div>
-
-    <div id="content1" class="main-content hidden">
-        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
-        <div class="flex flex-wrap justify-center mt-4">
-            {% for imagen in imagenes %}
-            <div class="m-4 p-4 bg-gray-800 rounded-lg">
-                <div class="text-center mb-2">{{ forloop.counter }}</div>
-                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
-                <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
-                    <input type="hidden" name="uploadType" value="Gallipan">
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-        <form id="uploadFormGallipan" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
-            {% csrf_token %}
-            <input type="hidden" name="uploadType" value="Gallipan">
-            <div class="mb-3">
-                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
-            </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
-        </form>
-        {% if messages %}
-            <div class="mt-4 text-center">
-                {% for message in messages %}
-                    <div class="text-red-500">{{ message }}</div>
+    
+    <!-- Main Content -->
+    <div class="flex-grow p-6">
+        <div id="content1" class="main-content hidden">
+            <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
+            <div class="flex flex-wrap justify-center mt-4">
+                {% for imagen in imagenes %}
+                <div class="m-4 p-4 bg-gray-800 rounded-lg">
+                    <div class="text-center mb-2">{{ forloop.counter }}</div>
+                    <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
+                    <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
+                        {% csrf_token %}
+                        <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
+                        <input type="hidden" name="uploadType" value="Gallipan">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                    </form>
+                </div>
                 {% endfor %}
             </div>
-        {% endif %}
-    </div>
+            <form id="uploadFormGallipan" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
+                {% csrf_token %}
+                <input type="hidden" name="uploadType" value="Gallipan">
+                <div class="mb-3">
+                    <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
+            </form>
+            {% if messages %}
+                <div class="mt-4 text-center">
+                    {% for message in messages %}
+                        <div class="text-red-500">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <div id="content2" class="main-content hidden">
-        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Muelle Restaurante</h1>
-        <div class="flex flex-wrap justify-center mt-4">
-            {% for imagenMuelle in imagenesMuelle %}
-            <div class="m-4 p-4 bg-gray-800 rounded-lg">
-                <div class="text-center mb-2">{{ forloop.counter }}</div>
-                <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
-                <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
-                    <input type="hidden" name="uploadType" value="Muelle">
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-        <form id="uploadFormMuelle" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
-            {% csrf_token %}
-            <input type="hidden" name="uploadType" value="Muelle">
-            <div class="mb-3">
-                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
-            </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
-        </form>
-        <div class="mt-4 text-center">
-            <a href="/menu" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
-        </div>
-        {% if messages %}
-            <div class="mt-4 text-center">
-                {% for message in messages %}
-                    <div class="text-red-500">{{ message }}</div>
+        <div id="content2" class="main-content hidden">
+            <h1 class="text-center text-4xl mt-6">Gestión de imágenes Muelle Restaurante</h1>
+            <div class="flex flex-wrap justify-center mt-4">
+                {% for imagenMuelle in imagenesMuelle %}
+                <div class="m-4 p-4 bg-gray-800 rounded-lg">
+                    <div class="text-center mb-2">{{ forloop.counter }}</div>
+                    <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
+                    <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
+                        {% csrf_token %}
+                        <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
+                        <input type="hidden" name="uploadType" value="Muelle">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                    </form>
+                </div>
                 {% endfor %}
             </div>
-        {% endif %}
+            <form id="uploadFormMuelle" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
+                {% csrf_token %}
+                <input type="hidden" name="uploadType" value="Muelle">
+                <div class="mb-3">
+                    <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
+            </form>
+            <div class="mt-4 text-center">
+                <a href="/menu" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
+            </div>
+            {% if messages %}
+                <div class="mt-4 text-center">
+                    {% for message in messages %}
+                        <div class="text-red-500">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <script>
