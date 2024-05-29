@@ -7,90 +7,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{% static 'img/logo.ico' %}">
     <title>Gestión de imágenes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/gestion.css' %}">
 </head>
-<body>
-    <div class="sidebar">
-        <button class="sidebar-btn" onclick="showContent('content1')">Gallipan</button>
-        <button class="sidebar-btn" onclick="showContent('content2')">Muelle Restaurante</button>
-        <a href="{% url 'logout' %}">Cerrar sesión</a>
-
+<body class="bg-gray-900 text-white flex flex-col items-center h-screen">
+    <div class="flex flex-col items-center mt-4">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content1')">Gallipan</button>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600" onclick="showContent('content2')">Muelle Restaurante</button>
+        <a href="{% url 'logout' %}" class="text-white mt-2">Cerrar sesión</a>
     </div>
 
-    <div id="content1" class="main-content">
-        <h1>Gestión de imágenes Gallipan</h1>
-        {% for imagen in imagenes %}
-        <div class="image-container">
-            <div class="image-counter">{{ forloop.counter }}</div>
-            <img src="{{ imagen.imagen.url }}" alt="Imagen">
-            <form action="{% url 'gestion-de-imagenes' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
-                <input type="hidden" name="uploadType" value="Gallipan">
-                <button type="submit" class="btn btn-danger">Borrar</button>
-            </form>
+    <div id="content1" class="main-content hidden">
+        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
+        <div class="flex flex-wrap justify-center mt-4">
+            {% for imagen in imagenes %}
+            <div class="m-4 p-4 bg-gray-800 rounded-lg">
+                <div class="text-center mb-2">{{ forloop.counter }}</div>
+                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
+                <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
+                    <input type="hidden" name="uploadType" value="Gallipan">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                </form>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-        <br>
-        <form id="uploadFormGallipan" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data">
+        <form id="uploadFormGallipan" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
             {% csrf_token %}
             <input type="hidden" name="uploadType" value="Gallipan">
             <div class="mb-3">
-                <input class="form-control" type="file" name="image" accept=".jpg, .jpeg, .png">
+                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
             </div>
-            <br>
-            <button type="submit" class="btn btn-light">Subir imagen</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
         </form>
         {% if messages %}
-            {% for message in messages %}
-                <div class="error-message">{{ message }}</div>
-            {% endfor %}
+            <div class="mt-4 text-center">
+                {% for message in messages %}
+                    <div class="text-red-500">{{ message }}</div>
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
 
-    <div id="content2" class="main-content" style="display: none;">
-        <h1>Gestión de imágenes Muelle Restaurante</h1>
-        {% for imagenMuelle in imagenesMuelle %}
-        <div class="image-container">
-            <div class="image-counter">{{ forloop.counter }}</div>
-            <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen">
-            <form action="{% url 'gestion-de-imagenes' %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
-                <input type="hidden" name="uploadType" value="Muelle">
-                <button type="submit" class="btn btn-danger">Borrar</button>
-            </form>
+    <div id="content2" class="main-content hidden">
+        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Muelle Restaurante</h1>
+        <div class="flex flex-wrap justify-center mt-4">
+            {% for imagenMuelle in imagenesMuelle %}
+            <div class="m-4 p-4 bg-gray-800 rounded-lg">
+                <div class="text-center mb-2">{{ forloop.counter }}</div>
+                <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
+                <form action="{% url 'gestion-de-imagenes' %}" method="POST" class="text-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
+                    <input type="hidden" name="uploadType" value="Muelle">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                </form>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-        <br>
-        <form id="uploadFormMuelle" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data">
+        <form id="uploadFormMuelle" action="{% url 'gestion-de-imagenes' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
             {% csrf_token %}
             <input type="hidden" name="uploadType" value="Muelle">
             <div class="mb-3">
-                <input class="form-control" type="file" name="image" accept=".jpg, .jpeg, .png">
+                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
             </div>
-            <br>
-            <button type="submit" class="btn btn-light">Subir imagen</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
         </form>
-        <div class="btn ver">
-            <a href="/menu"><button type="sucess">Ver Menu</button></a>
+        <div class="mt-4 text-center">
+            <a href="/menu" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
         </div>
         {% if messages %}
-            {% for message in messages %}
-                <div class="error-message">{{ message }}</div>
-            {% endfor %}
+            <div class="mt-4 text-center">
+                {% for message in messages %}
+                    <div class="text-red-500">{{ message }}</div>
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         function showContent(contentId) {
             var contents = document.querySelectorAll('.main-content');
             contents.forEach(function(content) {
-                content.style.display = 'none';
+                content.classList.add('hidden');
             });
-            document.getElementById(contentId).style.display = 'block';
+            document.getElementById(contentId).classList.remove('hidden');
         }
     </script>
 </body>
