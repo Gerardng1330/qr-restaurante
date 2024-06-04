@@ -23,7 +23,7 @@ def login_password(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('gestion-de-imagenes')  # Redirige a la página de gestión de imágenes
+            return redirect('inicio')  # Redirige a la página de gestión de imágenes
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
             return redirect(request.path_info)
@@ -98,6 +98,10 @@ def gestion_muelle(request):
     }
     return render(request, 'muelle.html', context)
 
+@login_required
+def gestion_inicio(request):
+    return render(request,'inicio.html')
+
 def logout_view(request):
     logout(request)
     return redirect('login_password')
@@ -156,7 +160,7 @@ def menu_view(request):
 
 def image_management_view2(request):
     imagenes = Imagen.objects.all()
-    return render(request, 'menu.html', {'imagenes': imagenes})
+    return render(request, 'menu_gallipan.html', {'imagenes': imagenes})
 
 @csrf_exempt
 def delete_image(request):
@@ -179,6 +183,9 @@ def delete_image(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
+def menu_muelle(request):
+    imagenes = ImagenMuelle.objects.all()
+    return render(request, 'menu_muelle.html', {'imagenes': imagenes})
 
 def delete_image_muelle(request, imagen_id):
     imagen_muelle = get_object_or_404(Imagen, id=imagen_id)

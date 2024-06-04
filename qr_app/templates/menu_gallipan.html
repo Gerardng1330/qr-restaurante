@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'img/gallipan.ico' %}">
+    <title>Menú</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .fullscreen-img {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .fullscreen-img img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .fullscreen-img.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-6">
+        <div class="flex flex-col items-center space-y-4">
+            {% for imagen in imagenes %}
+            <div class="bg-gray-800 p-4 rounded-lg">
+                <img src="{{ imagen.imagen.url }}" alt="Imagen Gallipan" class="cursor-pointer" onclick="showFullscreen(this)">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="fullscreenImage" class="fullscreen-img" onclick="hideFullscreen()">
+        <img src="" alt="Fullscreen Image">
+    </div>
+
+    <script>
+        function showFullscreen(imgElement) {
+            var fullscreenDiv = document.getElementById('fullscreenImage');
+            var fullscreenImg = fullscreenDiv.querySelector('img');
+            fullscreenImg.src = imgElement.src;
+            fullscreenDiv.classList.add('visible');
+        }
+
+        function hideFullscreen() {
+            var fullscreenDiv = document.getElementById('fullscreenImage');
+            fullscreenDiv.classList.remove('visible');
+        }
+    </script>
+</body>
+</html>
