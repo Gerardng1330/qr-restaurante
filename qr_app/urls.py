@@ -8,9 +8,10 @@ urlpatterns = [
     path('upload/', views.upload_view, name='upload'),
     path('panel/', views.panel, name='panel'),
     path('menu/', views.image_management_view2, name='menu'),
+    path('gallipan/', views.gestion_gallipan, name='gestion-gallipan'),
+    path('muelle/', views.gestion_muelle, name='gestion-muelle'),
     path('login/gestion_de_imagenes/', views.image_management_view, name='image_management_view'),
     path('delete/<int:imagen_id>/', views.delete_image, name='delete_image'),
     path('delete_muelle/<int:imagen_id>/', views.delete_image_muelle, name='delete_image_muelle'),
     path('qr-code/', views.qr_code_view, name='qr_code_view'),
-    path('gestion-de-imagenes/', views.gestion_de_imagenes, name='gestion-de-imagenes'),  
 ]

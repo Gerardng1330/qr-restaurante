@@ -38,8 +38,7 @@ export default function App() {
         />
       </Sidebar>
       <main className="flex h-screen">
-        {/* Aquí iría el contenido principal de tu aplicación */}
-        <h1>Contenido Principal</h1>
+        <h1 >Contenido Principal</h1>
       </main>
     </div>
   );

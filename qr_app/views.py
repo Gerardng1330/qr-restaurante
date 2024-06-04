@@ -31,25 +31,15 @@ def login_password(request):
         return render(request, 'login.html')
 
 @login_required
-def gestion_de_imagenes(request):
+def gestion_gallipan(request):
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
-            upload_type = request.POST.get('uploadType')
-            if upload_type == 'Gallipan':
-                imagen = get_object_or_404(Imagen, id=imagen_id)
-                imagen.delete()
-                messages.success(request, 'Imagen de Gallipan eliminada con éxito')
-            elif upload_type == 'Muelle':
-                imagen_muelle = get_object_or_404(ImagenMuelle, id=imagen_id)
-                imagen_muelle.delete()
-                messages.success(request, 'Imagen de Muelle Restaurante eliminada con éxito')
-            else:
-                messages.error(request, 'Tipo de eliminación desconocido')
+            imagen = get_object_or_404(Imagen, id=imagen_id)
+            imagen.delete()
+            messages.success(request, 'Imagen de Gallipan eliminada con éxito')
         elif 'image' in request.FILES:
-            upload_type = request.POST.get('uploadType')
             uploaded_image = request.FILES['image']
-            
             if not uploaded_image:
                 messages.error(request, 'No se seleccionó ninguna imagen.')
             else:
@@ -61,30 +51,52 @@ def gestion_de_imagenes(request):
                 img.save(temp_image_path)
                 temp_image = open(temp_image_path, 'rb')
                 temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
-                
-                if upload_type == 'Gallipan':
-                    nueva_imagen = Imagen(imagen=temp_uploaded_image)
-                    nueva_imagen.save()
-                    messages.success(request, 'Imagen subida a Gallipan con éxito')
-                elif upload_type == 'Muelle':
-                    nueva_imagen = ImagenMuelle(imagen_muelle=temp_uploaded_image)
-                    nueva_imagen.save()
-                    messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
-                else:
-                    messages.error(request, 'Tipo de subida desconocido')
-                
+                nueva_imagen = Imagen(imagen=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Gallipan con éxito')
                 temp_image.close()
                 os.remove(temp_image_path)
-        
-        return redirect('gestion-de-imagenes')
-    
+        return redirect('gestion-gallipan')
+
     imagenes = Imagen.objects.all()
-    imagenes_muelle = ImagenMuelle.objects.all()
     context = {
         'imagenes': imagenes,
+    }
+    return render(request, 'gallipan.html', context)
+
+@login_required
+def gestion_muelle(request):
+    if request.method == 'POST':
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            imagen_muelle = get_object_or_404(ImagenMuelle, id=imagen_id)
+            imagen_muelle.delete()
+            messages.success(request, 'Imagen de Muelle Restaurante eliminada con éxito')
+        elif 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                nueva_imagen = ImagenMuelle(imagen_muelle=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
+                temp_image.close()
+                os.remove(temp_image_path)
+        return redirect('gestion-muelle')
+
+    imagenes_muelle = ImagenMuelle.objects.all()
+    context = {
         'imagenesMuelle': imagenes_muelle,
     }
-    return render(request, 'gestion_de_imagenes.html', context)
+    return render(request, 'muelle.html', context)
 
 def logout_view(request):
     logout(request)
