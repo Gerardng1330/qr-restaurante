@@ -197,6 +197,8 @@ def image_management_view(request):
     return render(request, 'gestion_de_imagenes.html', {'imagenes': imagenes})
 
 
+def side(request):
+    return render(request,'side.html')
 
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR

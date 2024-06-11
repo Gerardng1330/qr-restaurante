@@ -9,6 +9,8 @@ urlpatterns = [
     path('panel/', views.panel, name='panel'),
     path('menu-gallipan/', views.image_management_view2, name='menu'),
     path('menu-muelle/', views.menu_muelle, name='menu-muelle'),
+    path('side/', views.side, name='side'),
+
 
     path('inicio/', views.gestion_inicio, name='inicio'),
     path('gallipan/', views.gestion_gallipan, name='gestion-gallipan'),
