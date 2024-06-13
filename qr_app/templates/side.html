@@ -8,11 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!----======== CSS ======== -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="{% static 'css/side.css' %}">
     
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <title>{% block title %}Sidebar{% endblock %}</title>
     
 </head>
 <body>
@@ -34,30 +36,25 @@
         <div class="menu-bar">
             <div class="menu">
 
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="text" placeholder="Search...">
-                </li>
-
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#">
+                        <a  href="{% url 'inicio' %}">
                             <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Dashboard</span>
+                            <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
+                        <a  href="{% url 'menu-gallipan' %}">
                             <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                            <span class="text nav-text">Revenue</span>
+                            <span class="text nav-text">Gallipan</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
+                        <a  href="{% url 'menu-muelle' %}">
+                            <i class='bx bx-bar-chart-alt-2 icon'></i>
+                            <span class="text nav-text">Muelle</span>
                         </a>
                     </li>
 
@@ -69,25 +66,17 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-heart icon' ></i>
-                            <span class="text nav-text">Likes</span>
+                        <a href="{% url 'edit_profile' %}">
+                            <i class='bx bxs-cog bx-flip-vertical-alt-2 icon' ></i>
+                            <span class="text nav-text">Configuración</span>
                         </a>
                     </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
-                        </a>
-                    </li>
-
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="">
-                    <a href="#">
+                    <a href="{% url 'logout' %}">
                         <i class='bx bx-log-out icon' ></i>
                         <span class="text nav-text">Logout</span>
                     </a>
@@ -111,41 +100,10 @@
     </nav>
 
     <section class="home">
-        <div class="text">Dashboard Sidebar</div>
+        {% block content %}
+        {% endblock %}
     </section>
-    <div class="flex-grow p-6">
-        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
-        <div class="flex flex-wrap justify-center mt-4">
-            {% for imagen in imagenes %}
-            <div class="m-4 p-4 bg-gray-800 rounded-lg">
-                <div class="text-center mb-2">{{ forloop.counter }}</div>
-                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
-                <form action="{% url 'gestion-gallipan' %}" method="POST" class="text-center">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-        <form id="uploadFormGallipan" action="{% url 'gestion-gallipan' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
-            {% csrf_token %}
-            <div class="mb-3">
-                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
-            </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
-        </form>
-        <div class="mt-4 text-center">
-            <a href="/menu" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
-        </div>
-        {% if messages %}
-            <div class="mt-4 text-center">
-                {% for message in messages %}
-                    <div class="text-red-500">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+
 
     <script>
         const body = document.querySelector('body'),

@@ -1,27 +1,10 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{% static 'img/logo.ico' %}">
-    <title>Inicio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/gestion.css' %}">
-</head>
-<body class="bg-gray-900 text-white flex h-screen">
-    <!-- Sidebar -->
-    <div class="w-64 bg-gray-800 p-4 flex flex-col items-center">
-        <a href="{% url 'inicio' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Inicio</a>
-        <a href="{% url 'gestion-gallipan' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Gallipan</a>
-        <a href="{% url 'gestion-muelle' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Muelle Restaurante</a>
-        <a href="{% url 'logout' %}" class="w-full text-center bg-red-500 text-white px-4 py-2 rounded m-2 hover:bg-red-600">Cerrar sesión</a>
-    </div>
+{% extends 'side.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-grow p-6">
+    <h1 class="text-center text-4xl mt-6">Bienvenido</h1>
     
-    <!-- Main Content -->
-    <div class="flex-grow p-6">
-        <h1 class="text-center text-4xl mt-6">Iniciofsfdsdsasdasa</h1>
-        
-    </div>
-</body>
-</html>
+</div>
+{% endblock %}

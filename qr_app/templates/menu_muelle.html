@@ -1,0 +1,39 @@
+{% extends 'side.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-grow p-6">
+    <h1 class="text-center text-4xl mt-6">Gestión de imágenes Muelle Restaurante</h1>
+    <div class="flex flex-wrap justify-center mt-4">
+        {% for imagenMuelle in imagenesMuelle %}
+        <div class="m-4 p-4 bg-gray-800 rounded-lg">
+            <div class="text-center mb-2">{{ forloop.counter }}</div>
+            <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
+            <form action="{% url 'menu-muelle' %}" method="POST" class="text-center">
+                {% csrf_token %}
+                <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <form id="uploadFormMuelle" action="{% url 'menu-muelle' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
+    </form>
+    <div class="mt-4 text-center">
+        <a href="/menu-muelle" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
+    </div>
+    {% if messages %}
+        <div class="mt-4 text-center">
+            {% for message in messages %}
+                <div class="text-red-500">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

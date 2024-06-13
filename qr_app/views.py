@@ -15,6 +15,23 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
+from .forms import UserEditForm
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tu perfil ha sido actualizado con éxito')
+            return redirect('edit_profile')
+    else:
+        form = UserEditForm(instance=request.user)
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'edit_profile.html', context)
 
 def login_password(request):
     if request.method == 'POST':
@@ -23,7 +40,7 @@ def login_password(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('inicio')  # Redirige a la página de gestión de imágenes
+            return redirect('side')  # Redirige a la página de gestión de imágenes
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
             return redirect(request.path_info)
@@ -158,9 +175,39 @@ def upload_view(request):
 def menu_view(request):
     return render(request,'menu.html')
 
+@login_required
 def image_management_view2(request):
+    if request.method == 'POST':
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            imagen = get_object_or_404(Imagen, id=imagen_id)
+            imagen.delete()
+            messages.success(request, 'Imagen de Gallipan eliminada con éxito')
+        elif 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                nueva_imagen = Imagen(imagen=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Gallipan con éxito')
+                temp_image.close()
+                os.remove(temp_image_path)
+        return redirect('menu-gallipan')
+
     imagenes = Imagen.objects.all()
-    return render(request, 'menu_gallipan.html', {'imagenes': imagenes})
+    context = {
+        'imagenes': imagenes,
+    }
+    return render(request, 'menu_gallipan.html', context)
 
 @csrf_exempt
 def delete_image(request):
@@ -183,9 +230,39 @@ def delete_image(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
+@login_required
 def menu_muelle(request):
-    imagenes = ImagenMuelle.objects.all()
-    return render(request, 'menu_muelle.html', {'imagenes': imagenes})
+    if request.method == 'POST':
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            imagen_muelle = get_object_or_404(ImagenMuelle, id=imagen_id)
+            imagen_muelle.delete()
+            messages.success(request, 'Imagen de Muelle Restaurante eliminada con éxito')
+        elif 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                nueva_imagen = ImagenMuelle(imagen_muelle=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
+                temp_image.close()
+                os.remove(temp_image_path)
+        return redirect('menu-muelle')
+
+    imagenes_muelle = ImagenMuelle.objects.all()
+    context = {
+        'imagenesMuelle': imagenes_muelle,
+    }
+    return render(request, 'menu_muelle.html', context)
 
 def delete_image_muelle(request, imagen_id):
     imagen_muelle = get_object_or_404(Imagen, id=imagen_id)
@@ -198,7 +275,37 @@ def image_management_view(request):
 
 
 def side(request):
-    return render(request,'side.html')
+    if request.method == 'POST':
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            imagen_muelle = get_object_or_404(ImagenMuelle, id=imagen_id)
+            imagen_muelle.delete()
+            messages.success(request, 'Imagen de Muelle Restaurante eliminada con éxito')
+        elif 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                nueva_imagen = ImagenMuelle(imagen_muelle=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
+                temp_image.close()
+                os.remove(temp_image_path)
+        return redirect('gestion-muelle')
+
+    imagenes_muelle = ImagenMuelle.objects.all()
+    context = {
+        'imagenesMuelle': imagenes_muelle,
+    }
+    return render(request, 'side.html', context)
 
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR

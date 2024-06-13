@@ -1,62 +1,39 @@
-{% load static %}
+{% extends 'side.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{% static 'img/gallipan.ico' %}">
-    <title>Menú</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .fullscreen-img {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-        }
-        .fullscreen-img img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        .fullscreen-img.visible {
-            display: flex;
-        }
-    </style>
-</head>
-<body class="bg-gray-900 text-white">
-    <div class="container mx-auto p-6">
-        <div class="flex flex-col items-center space-y-4">
-            {% for imagen in imagenes %}
-            <div class="bg-gray-800 p-4 rounded-lg">
-                <img src="{{ imagen.imagen.url }}" alt="Imagen Gallipan" class="cursor-pointer" onclick="showFullscreen(this)">
-            </div>
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-grow p-6">
+    <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
+    <div class="flex flex-wrap justify-center mt-4">
+        {% for imagen in imagenes %}
+        <div class="m-4 p-4 bg-gray-800 rounded-lg">
+            <div class="text-center mb-2">{{ forloop.counter }}</div>
+            <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
+            <form action="{% url 'menu-gallipan' %}" method="POST" class="text-center">
+                {% csrf_token %}
+                <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <form id="uploadFormGallipan" action="{% url 'menu-gallipan' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
+    </form>
+    <div class="mt-4 text-center">
+        <a href="/menu-gallipan" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
+    </div>
+    {% if messages %}
+        <div class="mt-4 text-center">
+            {% for message in messages %}
+                <div class="text-red-500">{{ message }}</div>
             {% endfor %}
         </div>
-    </div>
-
-    <div id="fullscreenImage" class="fullscreen-img" onclick="hideFullscreen()">
-        <img src="" alt="Fullscreen Image">
-    </div>
-
-    <script>
-        function showFullscreen(imgElement) {
-            var fullscreenDiv = document.getElementById('fullscreenImage');
-            var fullscreenImg = fullscreenDiv.querySelector('img');
-            fullscreenImg.src = imgElement.src;
-            fullscreenDiv.classList.add('visible');
-        }
-
-        function hideFullscreen() {
-            var fullscreenDiv = document.getElementById('fullscreenImage');
-            fullscreenDiv.classList.remove('visible');
-        }
-    </script>
-</body>
-</html>
+    {% endif %}
+</div>
+{% endblock %}
