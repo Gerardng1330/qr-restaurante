@@ -16,6 +16,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserEditForm
+from .forms import SignUpForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 @login_required
 def edit_profile(request):
@@ -30,6 +33,41 @@ def edit_profile(request):
     
     context = {
         'form': form
+    }
+    return render(request, 'edit_profile.html', context)
+
+@login_required
+def register(request):
+    if request.method == 'POST':
+        if 'current_password' in request.POST:  # Si se envía 'current_password', se está actualizando la contraseña
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Actualiza la sesión con la nueva contraseña
+                messages.success(request, 'Tu contraseña ha sido cambiada con éxito')
+                return redirect('edit_profile')
+        else:  # Caso contrario, se está registrando un nuevo usuario
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.email = form.cleaned_data.get('email')
+                user.save()
+                messages.success(request, f'Cuenta creada para {user.username}!')
+                
+                # Loguear automáticamente al usuario después del registro
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password1']
+                user = authenticate(username=username, password=password)
+                login(request, user)
+                
+                return redirect('edit_profile')
+    else:
+        form = SignUpForm()
+        password_form = PasswordChangeForm(request.user)
+    
+    context = {
+        'form': form,
+        'password_form': password_form,
     }
     return render(request, 'edit_profile.html', context)
 

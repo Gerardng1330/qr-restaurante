@@ -1,21 +1,92 @@
 {% extends 'side.html' %}
 
+{% load static %}
+
 {% block title %}Editar Perfil{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+<style>
+    .form-group {
+        margin-bottom: 15px; /* Ajusta el espacio vertical entre los elementos del formulario */
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">Editar Perfil</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar Cambios</button>
-    </form>
-    {% if messages %}
-        <div class="mt-4">
-            {% for message in messages %}
-                <div class="text-red-500">{{ message }}</div>
-            {% endfor %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-md w-full max-w-md">
+        <!-- Cuadro de Registro de Usuario -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">Registro de Usuario</h2>
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {% if form.username.help_text %}
+                        <small class="text-gray-500 dark:text-gray-400">{{ form.username.help_text }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {% if form.password1.help_text %}
+                        <small class="text-gray-500 dark:text-gray-400">{{ form.password1.help_text }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    {% if form.password2.help_text %}
+                        <small class="text-gray-500 dark:text-gray-400">{{ form.password2.help_text }}</small>
+                    {% endif %}
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+                    Registrar
+                </button>
+            </form>
         </div>
-    {% endif %}
+
+        <!-- Mostrar mensajes -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message-success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Cuadro de Cambio de Contraseña -->
+        
+    </div>
 </div>
+<div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="bg-white dark:bg-gray-900 p-6 rounded shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">Cambiar Contraseña</h2>
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            {{ password_form.as_p }}
+            <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700">
+                Guardar cambios
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}

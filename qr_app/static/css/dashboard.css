@@ -1,0 +1,101 @@
+/* Estilos para las cartas */
+.flex {
+    display: flex;
+    gap: 20px; /* Espacio entre las cartas */
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px; /* Ancho de cada carta */
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.card-title {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.toggle-button {
+    background-color: #3490dc;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-icon {
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Estilos para el popup */
+.popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form label,
+.edit-form input,
+.edit-form button {
+    margin-bottom: 10px;
+}
+
+.edit-form input[type="file"] {
+    margin-bottom: 20px;
+}

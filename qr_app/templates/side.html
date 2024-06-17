@@ -6,11 +6,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'img/logo.ico' %}">
     
     <!----======== CSS ======== -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="{% static 'css/side.css' %}">
+
+    {% block extra_css %}{% endblock %}
     
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -35,36 +38,31 @@
 
         <div class="menu-bar">
             <div class="menu">
-
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a  href="{% url 'inicio' %}">
+                        <a href="{% url 'inicio' %}">
                             <i class='bx bx-home-alt icon' ></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
-
                     <li class="nav-link">
-                        <a  href="{% url 'menu-gallipan' %}">
+                        <a href="{% url 'menu-gallipan' %}">
                             <i class='bx bx-bar-chart-alt-2 icon' ></i>
                             <span class="text nav-text">Gallipan</span>
                         </a>
                     </li>
-
                     <li class="nav-link">
-                        <a  href="{% url 'menu-muelle' %}">
+                        <a href="{% url 'menu-muelle' %}">
                             <i class='bx bx-bar-chart-alt-2 icon'></i>
                             <span class="text nav-text">Muelle</span>
                         </a>
                     </li>
-
                     <li class="nav-link">
                         <a href="#">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
                     </li>
-
                     <li class="nav-link">
                         <a href="{% url 'edit_profile' %}">
                             <i class='bx bxs-cog bx-flip-vertical-alt-2 icon' ></i>
@@ -93,10 +91,8 @@
                         <span class="switch"></span>
                     </div>
                 </li>
-                
             </div>
         </div>
-
     </nav>
 
     <section class="home">
@@ -104,35 +100,11 @@
         {% endblock %}
     </section>
 
+    <!-- JavaScript -->
+    <script src="{% static 'js/darkmode.js' %}"></script>
+    {% block extra_js %}
+    {% endblock %}
 
-    <script>
-        const body = document.querySelector('body'),
-      sidebar = body.querySelector('nav'),
-      toggle = body.querySelector(".toggle"),
-      searchBtn = body.querySelector(".search-box"),
-      modeSwitch = body.querySelector(".toggle-switch"),
-      modeText = body.querySelector(".mode-text");
-
-
-toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
-})
-
-searchBtn.addEventListener("click" , () =>{
-    sidebar.classList.remove("close");
-})
-
-modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
-    
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Light mode";
-    }else{
-        modeText.innerText = "Dark mode";
-        
-    }
-});
-    </script>
 
 </body>
 </html>

@@ -1,14 +1,20 @@
 {% extends 'side.html' %}
+{% load static %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/menu_muelle.css' %}">
+{% endblock %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <div class="flex-grow p-6">
-    <h1 class="text-center text-4xl mt-6">Gestión de imágenes Muelle Restaurante</h1>
+    <h1 class="text-center text-4xl mt-6 text-gray-900 dark:text-white">Gestión de imágenes Muelle Restaurante</h1>
     <div class="flex flex-wrap justify-center mt-4">
         {% for imagenMuelle in imagenesMuelle %}
-        <div class="m-4 p-4 bg-gray-800 rounded-lg">
-            <div class="text-center mb-2">{{ forloop.counter }}</div>
+        <div class="m-4 p-4 bg-gray-200 dark:bg-gray-800 border border-black rounded-lg">
+            <div class="text-center mb-2 text-gray-900 dark:text-white">{{ forloop.counter }}</div>
             <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
             <form action="{% url 'menu-muelle' %}" method="POST" class="text-center">
                 {% csrf_token %}
@@ -21,7 +27,7 @@
     <form id="uploadFormMuelle" action="{% url 'menu-muelle' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
         {% csrf_token %}
         <div class="mb-3">
-            <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
+            <input class="block w-full text-gray-900 bg-gray-200 dark:text-gray-200 dark:bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
         </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
     </form>
@@ -31,7 +37,7 @@
     {% if messages %}
         <div class="mt-4 text-center">
             {% for message in messages %}
-                <div class="text-red-500">{{ message }}</div>
+                <div class="text-red-500 dark:text-red-400">{{ message }}</div>
             {% endfor %}
         </div>
     {% endif %}

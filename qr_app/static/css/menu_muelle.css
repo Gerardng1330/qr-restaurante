@@ -1,0 +1,55 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estilos específicos para los cuadros en el tablero */
+.dark .bg-white {
+    background-color: #1a1a1a;
+    border-color: #333333;
+}
+
+.dark .text-gray-900 {
+    color: #f5f5f5;
+}
+
+.dark .bg-gray-200 {
+    background-color: #2d2d2d;
+    border-color: #444444;
+}
+
+.dark .text-red-500 {
+    color: #ff6666;
+}
+
+/* Estilos para el botón de subir imagen */
+.dark input[type="file"] {
+    color: #f5f5f5;
+    background-color: #333333;
+    border-color: #444444;
+}
+
+/* Cambiar el color del texto de las etiquetas y campos en modo oscuro */
+.dark .form-group label,
+.dark .form-group input,
+.dark .form-group small,
+.dark .form-group textarea,
+.dark .form-group select {
+    color: #f5f5f5;
+}
+
+.dark .form-group input,
+.dark .form-group textarea,
+.dark .form-group select {
+    background-color: #333333;
+    border-color: #444444;
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+    color: #aaaaaa;
+}
+
+/* Estilo para el título en modo oscuro */
+.dark .title {
+    color: #f5f5f5;
+}

@@ -7,7 +7,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('upload/', views.upload_view, name='upload'),
     path('panel/', views.panel, name='panel'),
-    path('edit-profile/', views.edit_profile, name='edit_profile'),
+    path('edit-profile/', views.register, name='edit_profile'),
     #links para ver el menu de los qr
     path('menu-gallipan/', views.image_management_view2, name='menu-gallipan'),
     path('menu-muelle/', views.menu_muelle, name='menu-muelle'),

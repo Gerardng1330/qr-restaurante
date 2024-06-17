@@ -1,10 +1,80 @@
 {% extends 'side.html' %}
+{% load static %}
+
 
 {% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="flex-grow p-6">
     <h1 class="text-center text-4xl mt-6">Bienvenido</h1>
+    <br>
+    <br>
     
+    <div class="flex justify-center mt-8 space-x-4">
+        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
+            <img src="{% static 'img/gallipan.png' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
+            <div class="p-4">
+                <h2 class="text-xl font-bold mb-2">QR-Gallipan</h2>
+                <div class="flex items-center justify-between">
+                    <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
+                    <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
+            <img src="{% static 'img/muelle.png' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
+            <div class="p-4">
+                <h2 class="text-xl font-bold mb-2">Muelle</h2>
+                <div class="flex items-center justify-between">
+                    <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
+                    <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
+            <div class="flex items-center justify-center h-full">
+                <button class="add-card-button bg-blue-500 text-white font-bold py-8 px-16 rounded-full hover:bg-blue-700">
+                    <i class="bx bx-plus-circle text-4xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        
+        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
+            <img src="{% static 'img/default.jpg' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
+            <div class="p-4">
+                <h2 class="text-xl font-bold mb-2">Título de la Carta 4</h2>
+                <div class="flex items-center justify-between">
+                    <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
+                    <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Popup para editar -->
+<div id="edit-popup" class="popup">
+    <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Editar Carta</h2>
+        <form class="edit-form">
+            <label for="new-image">Seleccionar Nueva Imagen:</label>
+            <input type="file" id="new-image" name="new-image">
+            <label for="new-title">Nuevo Título:</label>
+            <input type="text" id="new-title" name="new-title">
+            <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Guardar</button>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
+
+
+<script src="{% static 'js/dashboard.js' %}"></script>
