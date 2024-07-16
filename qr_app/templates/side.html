@@ -8,14 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{% static 'img/logo.ico' %}">
     
-    <!----======== CSS ======== -->
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="{% static 'css/side.css' %}">
 
     {% block extra_css %}{% endblock %}
-    
-    <!----===== Boxicons CSS ===== -->
+
+    <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <title>{% block title %}Sidebar{% endblock %}</title>
     
@@ -26,13 +25,11 @@
             <div class="image-text">
                 <span class="image">
                 </span>
-
                 <div class="text logo-text">
                     <span class="name">ADMIN</span>
                     <span class="profession">Admin</span>
                 </div>
             </div>
-
             <i class='bx bx-chevron-right toggle'></i>
         </header>
 
@@ -41,13 +38,13 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="{% url 'inicio' %}">
-                            <i class='bx bx-home-alt icon' ></i>
+                            <i class='bx bx-home-alt icon'></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="{% url 'menu-gallipan' %}">
-                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                            <i class='bx bx-bar-chart-alt-2 icon'></i>
                             <span class="text nav-text">Gallipan</span>
                         </a>
                     </li>
@@ -59,13 +56,13 @@
                     </li>
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <i class='bx bx-pie-chart-alt icon'></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
                     </li>
                     <li class="nav-link">
                         <a href="{% url 'edit_profile' %}">
-                            <i class='bx bxs-cog bx-flip-vertical-alt-2 icon' ></i>
+                            <i class='bx bxs-cog bx-flip-vertical-alt-2 icon'></i>
                             <span class="text nav-text">Configuración</span>
                         </a>
                     </li>
@@ -75,7 +72,7 @@
             <div class="bottom-content">
                 <li class="">
                     <a href="{% url 'logout' %}">
-                        <i class='bx bx-log-out icon' ></i>
+                        <i class='bx bx-log-out icon'></i>
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
@@ -86,7 +83,6 @@
                         <i class='bx bx-sun icon sun'></i>
                     </div>
                     <span class="mode-text text">Dark mode</span>
-
                     <div class="toggle-switch">
                         <span class="switch"></span>
                     </div>
@@ -96,15 +92,45 @@
     </nav>
 
     <section class="home">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </section>
 
     <!-- JavaScript -->
-    <script src="{% static 'js/darkmode.js' %}"></script>
-    {% block extra_js %}
-    {% endblock %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const body = document.querySelector('body');
+            const sidebar = body.querySelector('nav.sidebar');
+            const toggle = body.querySelector(".toggle");
+            const modeSwitch = body.querySelector(".toggle-switch");
+            const modeText = body.querySelector(".mode-text");
 
+            // Handle sidebar toggle
+            toggle.addEventListener("click", () => {
+                sidebar.classList.toggle("close");
+            });
 
+            // Check for saved 'darkMode' in localStorage
+            const currentMode = localStorage.getItem('darkMode');
+            if (currentMode === 'enabled') {
+                body.classList.add('dark');
+                modeText.innerText = "Light mode";
+            } else {
+                modeText.innerText = "Dark mode";
+            }
+
+            // Handle dark mode toggle
+            modeSwitch.addEventListener("click", () => {
+                body.classList.toggle("dark");
+                if (body.classList.contains("dark")) {
+                    localStorage.setItem('darkMode', 'enabled');
+                    modeText.innerText = "Light mode";
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                    modeText.innerText = "Dark mode";
+                }
+            });
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

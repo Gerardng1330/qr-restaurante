@@ -19,3 +19,31 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const openModalButton = document.getElementById('openModalButton');
+    const closeModalButton = document.getElementById('closeModalButton');
+    const modal = document.getElementById('modal');
+
+    openModalButton.addEventListener('click', function() {
+        modal.classList.remove('hidden');
+    });
+
+    closeModalButton.addEventListener('click', function() {
+        modal.classList.add('hidden');
+    });
+
+    // Lógica para el popup de edición
+    const editIcons = document.querySelectorAll('.edit-icon');
+    const editPopup = document.getElementById('edit-popup');
+    const closeEditPopupButton = editPopup.querySelector('.close');
+
+    editIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            editPopup.classList.add('open');
+        });
+    });
+
+    closeEditPopupButton.addEventListener('click', function() {
+        editPopup.classList.remove('open');
+    });
+});

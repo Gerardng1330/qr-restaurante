@@ -1,7 +1,6 @@
 {% extends 'side.html' %}
 {% load static %}
 
-
 {% block title %}Dashboard{% endblock %}
 
 {% block extra_css %}
@@ -10,46 +9,68 @@
 
 {% block content %}
 <div class="flex-grow p-6">
-    <h1 class="text-center text-4xl mt-6">Bienvenido</h1>
+    <h1 class="text-center text-4xl mt-6 dark:text-white">Bienvenido</h1>
     <br>
     <br>
-    
+    <!-- Button to open the modal -->
+    <button id="openModalButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M10 5v5H5v2h5v5h2v-5h5v-2h-5V5z"/>
+        </svg>
+        <span>Añadir</span>
+    </button>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed z-50 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg p-8 shadow-lg relative w-1/2">
+                <!-- Modal close button -->
+                <button id="closeModalButton" class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <!-- Modal content -->
+                <h2 class="text-2xl mb-4">Añadir Información</h2>
+                <form>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            Título
+                        </label>
+                        <input id="title" type="text" placeholder="Ingrese el título" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
+                            Imagen
+                        </label>
+                        <input id="image" type="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="flex justify-center mt-8 space-x-4">
         <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
             <img src="{% static 'img/gallipan.png' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
             <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">QR-Gallipan</h2>
+                <h2 class="text-xl font-bold mb-2"><center>Gallipan</center></h2>
                 <div class="flex items-center justify-between">
                     <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
                     <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
                 </div>
             </div>
         </div>
-        
+
         <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
             <img src="{% static 'img/muelle.png' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
             <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Muelle</h2>
-                <div class="flex items-center justify-between">
-                    <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
-                    <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
-            <div class="flex items-center justify-center h-full">
-                <button class="add-card-button bg-blue-500 text-white font-bold py-8 px-16 rounded-full hover:bg-blue-700">
-                    <i class="bx bx-plus-circle text-4xl"></i>
-                </button>
-            </div>
-        </div>
-        
-        
-        <div class="card bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
-            <img src="{% static 'img/default.jpg' %}" alt="Imagen" class="card-image w-full h-64 object-cover">
-            <div class="p-4">
-                <h2 class="text-xl font-bold mb-2">Título de la Carta 4</h2>
+                <h2 class="text-xl font-bold mb-2"><center>Muelle</center></h2>
                 <div class="flex items-center justify-between">
                     <button class="toggle-button bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Activar</button>
                     <i class="bx bx-edit edit-icon text-gray-400 cursor-pointer"></i>
@@ -75,6 +96,6 @@
 </div>
 
 {% endblock %}
-
-
-<script src="{% static 'js/dashboard.js' %}"></script>
+{% block extra_js %}
+<script src="{%static 'js/dashboard.js'%}"></script>
+{% endblock %}

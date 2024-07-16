@@ -168,6 +168,9 @@ def panel(request):
 def codigo_qr(request):
     return render(request,'codigo_qr.html')
 
+def muelle_qr(request):
+    return render(request,'muelle_qr.html')
+
 def upload(request):
     return render(request,'upload.html')
 
@@ -348,6 +351,29 @@ def side(request):
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR
     local_url = "http://127.0.0.1:2000/pagina"
+
+    # Crear el código QR
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(local_url)
+    qr.make(fit=True)
+
+    # Crear una imagen del código QR
+    buffer = BytesIO()
+    img = qr.make_image(fill_color="black", back_color="white")
+    img.save(buffer, format="PNG")
+
+    # Devolver la imagen como respuesta HTTP
+    return HttpResponse(buffer.getvalue(), content_type="image/png")
+
+
+def muelle_qr_view(request):
+    # URL a la que deseas redirigir cuando se escanea el código QR
+    local_url = "http://127.0.0.1:2000/muelle_qr"
 
     # Crear el código QR
     qr = qrcode.QRCode(
