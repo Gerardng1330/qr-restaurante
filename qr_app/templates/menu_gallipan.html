@@ -1,10 +1,14 @@
 {% extends 'side.html' %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'css/menu_muelle.css' %}">
+{% endblock %}
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <div class="flex-grow p-6">
-    <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
+    <h1 class="text-center text-4xl mt-6 text-gray-900 dark:text-white">Gestión de imágenes Gallipan</h1>
     <div class="flex flex-wrap justify-center mt-4">
         {% for imagen in imagenes %}
         <div class="m-4 p-4 bg-gray-800 rounded-lg">

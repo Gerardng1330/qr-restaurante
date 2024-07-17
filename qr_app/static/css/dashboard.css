@@ -1,3 +1,13 @@
+/* Estilos para el título en modo claro */
+.text-gray-900 {
+    color: #333; /* Cambia este color según necesites */
+}
+
+/* Estilos para el título en modo oscuro */
+.dark .text-white {
+    color: #f5f5f5; /* Cambia este color según necesites */
+}
+
 /* Estilos para las cartas */
 .flex {
     display: flex;

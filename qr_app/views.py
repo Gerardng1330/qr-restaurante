@@ -19,6 +19,27 @@ from .forms import UserEditForm
 from .forms import SignUpForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from .models import card
+from .forms import CardForm
+
+def dashboard(request):
+    cards = card.objects.all()
+    return render(request, 'inicio.html', {'cards': cards})
+
+def add_card(request):
+    if request.method == 'POST':
+        form = CardForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('inicio')
+    else:
+        form = CardForm()
+    return render(request, 'inicio.html', {'form': form})
+
+def delete_card(request, card_id):
+    card = card.objects.get(id=card_id)
+    card.delete()
+    return redirect('inicio')
 
 @login_required
 def edit_profile(request):

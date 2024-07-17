@@ -1,6 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import card
+
+class CardForm(forms.ModelForm):
+    class Meta:
+        model = card
+        fields = ['title','imagen_card']
 
 class UserEditForm(forms.ModelForm):
     class Meta:
