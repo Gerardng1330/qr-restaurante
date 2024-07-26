@@ -27,14 +27,16 @@ def dashboard(request):
     return render(request, 'inicio.html', {'cards': cards})
 
 def add_card(request):
+    cards = card.objects.all()
+    form = CardForm()
+    
     if request.method == 'POST':
         form = CardForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('inicio')
-    else:
-        form = CardForm()
-    return render(request, 'inicio.html', {'form': form})
+            return redirect('prueba')  # Redirige a la misma página para actualizar la lista de tarjetas
+    
+    return render(request, 'prueba.html', {'cards': cards, 'form': form})
 
 def delete_card(request, card_id):
     card = card.objects.get(id=card_id)
@@ -194,6 +196,8 @@ def muelle_qr(request):
 
 def upload(request):
     return render(request,'upload.html')
+def prueba(request):
+    return render(request,'prueba.html')
 
 def login_view(request):
     return render(request, 'login.html')

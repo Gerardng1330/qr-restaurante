@@ -1,9 +1,14 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path
+from . import views
 
 urlpatterns = [
     #agregar y elminar cartas
     path('add/', views.add_card, name='add_card'),
+    path('prueba',views.add_card, name='prueba'),
     path('delete/<int:card_id>/', views.delete_card, name='delete_card'),
     #codigos qr
     path('muelle-qr',views.muelle_qr, name='muelle-qr'),
@@ -30,4 +35,4 @@ urlpatterns = [
     path('delete_muelle/<int:imagen_id>/', views.delete_image_muelle, name='delete_image_muelle'),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

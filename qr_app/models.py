@@ -8,6 +8,9 @@ from PIL import Image, ImageDraw
 class card(models.Model):
     title=models.CharField(max_length=200)
     imagen_card=models.ImageField(upload_to='card/')
+    
+    def __str__(self):
+        return self.title
 
 #tabla para guardar la imagen gallipan
 class Imagen(models.Model):
