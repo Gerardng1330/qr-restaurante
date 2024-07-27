@@ -54,6 +54,14 @@
                             <span class="text nav-text">Muelle</span>
                         </a>
                     </li>
+                    {% for card in cards %}
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-bar-chart-alt-2 icon'></i>
+                            <span class="text nav-text">{{ card.title }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
                     <li class="nav-link">
                         <a href="#">
                             <i class='bx bx-pie-chart-alt icon'></i>
@@ -66,6 +74,7 @@
                             <span class="text nav-text">Configuración</span>
                         </a>
                     </li>
+                    
                 </ul>
             </div>
 

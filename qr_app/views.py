@@ -39,9 +39,13 @@ def add_card(request):
     return render(request, 'prueba.html', {'cards': cards, 'form': form})
 
 def delete_card(request, card_id):
-    card = card.objects.get(id=card_id)
-    card.delete()
-    return redirect('inicio')
+    cards = get_object_or_404(card, id=card_id)
+    
+    if request.method == 'POST':
+        cards.delete()
+        return redirect('prueba')  # Redirige a la misma página para actualizar la lista de tarjetas
+
+    return render(request, 'prueba.html')
 
 @login_required
 def edit_profile(request):
