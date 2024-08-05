@@ -2,17 +2,17 @@
 {% load static %}
     
 {% block content %}
-<h1 class="text-center text-4xl font-bold mt-6 text-white">Bienvenido</h1>
+<h1 class="text-center text-4xl font-bold mt-6 text-white dark:text-black">Bienvenido</h1>
 <button id="openModalButton" class="ml-20 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded inline-flex items-center">
     <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
         <path d="M10 5v5H5v2h5v5h2v-5h5v-2h-5V5z"/>
     </svg>
     <span>Añadir</span>
 </button>
-
+<!--Modal para añadir card-->
 <div id="modal" class="fixed z-50 inset-0 overflow-y-auto hidden">
     <div class="flex items-center justify-center min-h-screen">
-        <div class="bg-white rounded-lg p-8 shadow-lg relative w-1/2">
+        <div class="bg-gray-800 text-white rounded-lg p-8 shadow-lg relative w-1/2">
             <!-- Modal close button -->
             <button id="closeModalButton" class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -23,8 +23,19 @@
             <h2 class="text-2xl mb-4">Añadir Información</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
-                <div class="flex items-center justify-between">
+                <div class="space-y-4">
+                    <div class="form-group">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.imagen_card.label_tag }}
+                        {{ form.imagen_card }}
+                        {{ form.imagen_card.errors }}
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mt-4">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Guardar
                     </button>
@@ -33,7 +44,7 @@
         </div>
     </div>
 </div>
-
+<!--Modal para eliminar un card-->
 <div id="modalDelete" class="fixed z-50 inset-0 overflow-y-auto hidden">
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white rounded-lg p-8 shadow-lg relative w-1/2">
@@ -60,13 +71,83 @@
         </div>
     </div>
 </div>
+<!--Modal del QR Gallipan-->
+<div id="modalQR" class="fixed z-50 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg p-8 shadow-lg relative w-1/2">
+            <!-- Modal close button -->
+            <button id="closeCardQR" class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <!-- Modal content -->
+            <div class="flex justify-center items-center">
+                <div class="qr-container w-full md:w-full lg:w-2/3">
+                    <img src="{% url 'qr_code_view' %}" alt="Código QR" class="qr-code w-full">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal del QR Muelle-->
+<div id="modalQRMuelle" class="fixed z-50 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg p-8 shadow-lg relative w-1/2">
+            <!-- Modal close button -->
+            <button id="closeCardQRMuelle" class="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <!-- Modal content -->
+            <div class="flex justify-center items-center">
+                <div class="qr-container w-full md:w-full lg:w-2/3">
+                    <img src="{% url 'qr_muelle_view' %}" alt="Código QR" class="qr-code w-full">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Display cards -->
 <div class="ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+    <!--Gallipan-->
+    <div class="bg-white p-5 rounded-lg shadow-md relative h-90">
+        <img src="{% static 'img/gallipan.png' %}" alt="Gallipan" class="w-full h-60 object-cover rounded-md mb-4">
+        <h3 class="text-xl font-semibold">Gallipan</h3>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            Ir a la página
+        </button>
+        <button id="openModalButtonQR" class="ml-2 h-9 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+            </svg>
+        </button>      
+    </div>
+    <!--Muelle-->
+    <div class="bg-white p-5 rounded-lg shadow-md relative h-90">
+        <img src="{% static 'img/Muelle.png' %}" alt="Gallipan" class="w-full h-60 object-cover rounded-md mb-4">
+        <h3 class="text-xl font-semibold">Muelle</h3>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            Ir a la página
+        </button>
+        <button id="openModalButtonQRMuelle" class="ml-2 h-9 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+            </svg>
+        </button>         
+    </div>
+    <!--El que añade el usuario-->
     {% for card in cards %}
     <div class="bg-white p-5 rounded-lg shadow-md relative h-90">
         <img src="{{ card.imagen_card.url }}" alt="{{ card.title }}" class="w-full h-60 object-cover rounded-md mb-4">
         <h3 class="text-xl font-semibold">{{ card.title }}</h3>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            Ir a la página
+        </button>
         <button class="openModalButtonDelete text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-card-id="{{ card.id }}">
             Eliminar
         </button>
@@ -96,6 +177,27 @@
             modal.classList.add('hidden');
         });
 
+        const openModalButtonQR = document.getElementById('openModalButtonQR');
+        const modalQR = document.getElementById('modalQR');
+        const closeCardQR = document.getElementById('closeCardQR');
+
+        const openModalButtonQRMuelle = document.getElementById('openModalButtonQRMuelle');
+        const modalQRMuelle = document.getElementById('modalQRMuelle');
+        const closeCardQRMuelle = document.getElementById('closeCardQRMuelle');
+
+        openModalButtonQR.addEventListener('click',function(){
+            modalQR.classList.remove('hidden');
+        });
+        closeCardQR.addEventListener('click',function(){
+            modalQR.classList.add('hidden');
+        });
+        openModalButtonQRMuelle.addEventListener('click',function(){
+            modalQRMuelle.classList.remove('hidden');
+        });
+        closeCardQRMuelle.addEventListener('click',function(){
+            modalQRMuelle.classList.add('hidden');
+        });
+
         const openModalButtonsDelete = document.querySelectorAll('.openModalButtonDelete');
         const modalDelete = document.getElementById('modalDelete');
         const closeModalButtonDelete = document.getElementById('closeModalButtonDelete');
@@ -114,6 +216,8 @@
         closeModalButtonDelete.addEventListener('click', function() {
             modalDelete.classList.add('hidden');
         });
+
+        
     });
 </script>
 {% endblock %}
