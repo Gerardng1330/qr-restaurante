@@ -15,6 +15,10 @@ class card(models.Model):
 #tabla para guardar la imagen gallipan
 class Imagen(models.Model):
     imagen = models.ImageField(upload_to='imagenes/')
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
 
 #tabla para guardar la imagen muelle
 class ImagenMuelle(models.Model):

@@ -11,14 +11,38 @@
     <h1 class="text-center text-4xl mt-6 text-gray-900 dark:text-white">Gestión de imágenes Gallipan</h1>
     <div class="flex flex-wrap justify-center mt-4">
         {% for imagen in imagenes %}
-        <div class="m-4 p-4 bg-gray-800 rounded-lg">
-            <div class="text-center mb-2">{{ forloop.counter }}</div>
+        <div class="m-4 p-4 bg-gray-200 dark:bg-gray-800 border border-black rounded-lg">
+            <div class="text-center mb-2 text-gray-900 dark:text-white">{{ forloop.counter }}</div>
             <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
-            <form action="{% url 'menu-gallipan' %}" method="POST" class="text-center">
-                {% csrf_token %}
-                <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-            </form>
+            <div class="ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-5">
+                <div class="flex justify-center mb-2">
+                    <!-- Botón de mover arriba -->
+                    <form action="{% url 'menu-gallipan' %}" method="POST" class="mr-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="move_image_id" value="{{ imagen.id }}">
+                        <input type="hidden" name="move_action" value="up">
+                        <button type="submit" class="bg-blue-900 text-white px-5 py-4 rounded hover:bg-blue-600">
+                            ↑
+                        </button>
+                    </form>
+                    <!-- Botón de mover abajo -->
+                    <form action="{% url 'menu-gallipan' %}" method="POST" class="ml-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="move_image_id" value="{{ imagen.id }}">
+                        <input type="hidden" name="move_action" value="down">
+                        <button type="submit" class="bg-blue-900 text-white px-5 py-4 rounded hover:bg-blue-600">
+                            ↓
+                        </button>
+                    </form>
+                </div>
+                
+                <form action="{% url 'menu-gallipan' %}" method="POST" class="text-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                </form>
+            </div>
+            
         </div>
         {% endfor %}
     </div>
@@ -29,6 +53,7 @@
         </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
     </form>
+    
     <div class="mt-4 text-center">
         <a href="/menu-gallipan" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
     </div>

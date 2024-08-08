@@ -65,6 +65,9 @@ def edit_profile(request):
 
 @login_required
 def register(request):
+    form = SignUpForm()
+    password_form = PasswordChangeForm(request.user)
+    
     if request.method == 'POST':
         if 'current_password' in request.POST:  # Si se envía 'current_password', se está actualizando la contraseña
             password_form = PasswordChangeForm(request.user, request.POST)
@@ -73,6 +76,8 @@ def register(request):
                 update_session_auth_hash(request, user)  # Actualiza la sesión con la nueva contraseña
                 messages.success(request, 'Tu contraseña ha sido cambiada con éxito')
                 return redirect('edit_profile')
+            else:
+                print('contraseña incorrecta')
         else:  # Caso contrario, se está registrando un nuevo usuario
             form = SignUpForm(request.POST)
             if form.is_valid():
@@ -86,17 +91,18 @@ def register(request):
                 password = form.cleaned_data['password1']
                 user = authenticate(username=username, password=password)
                 login(request, user)
+                messages.success(request, 'Tu contraseña ha sido cambiada con éxito')
+            else:
+                print('Error al registrar al usuario')
                 
                 return redirect('edit_profile')
-    else:
-        form = SignUpForm()
-        password_form = PasswordChangeForm(request.user)
-    
+
     context = {
         'form': form,
         'password_form': password_form,
     }
     return render(request, 'edit_profile.html', context)
+
 
 def login_password(request):
     if request.method == 'POST':
@@ -114,6 +120,8 @@ def login_password(request):
 
 @login_required
 def gestion_gallipan(request):
+    cards = card.objects.all()
+
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
@@ -144,7 +152,7 @@ def gestion_gallipan(request):
     context = {
         'imagenes': imagenes,
     }
-    return render(request, 'gallipan.html', context)
+    return render(request, 'gallipan.html', context,{'cards': cards})
 
 @login_required
 def gestion_muelle(request):
@@ -246,6 +254,7 @@ def menu_view(request):
     return render(request,'menu.html')
 
 @login_required
+
 def image_management_view2(request):
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
@@ -271,9 +280,26 @@ def image_management_view2(request):
                 messages.success(request, 'Imagen subida a Gallipan con éxito')
                 temp_image.close()
                 os.remove(temp_image_path)
+        elif 'move_image_id' in request.POST:
+            image_id = request.POST['move_image_id']
+            action = request.POST['move_action']
+            image = Imagen.objects.get(id=image_id)
+
+            if action == 'up':
+                previous_image = Imagen.objects.filter(order__lt=image.order).order_by('-order').first()
+                if previous_image:
+                    image.order, previous_image.order = previous_image.order, image.order
+                    image.save()
+                    previous_image.save()
+            elif action == 'down':
+                next_image = Imagen.objects.filter(order__gt=image.order).order_by('order').first()
+                if next_image:
+                    image.order, next_image.order = next_image.order, image.order
+                    image.save()
+                    next_image.save()
         return redirect('menu-gallipan')
 
-    imagenes = Imagen.objects.all()
+    imagenes = Imagen.objects.all().order_by('order')
     context = {
         'imagenes': imagenes,
     }
