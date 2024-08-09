@@ -22,10 +22,6 @@ from django.contrib.auth import update_session_auth_hash
 from .models import card
 from .forms import CardForm
 
-def dashboard(request):
-    cards = card.objects.all()
-    return render(request, 'inicio.html', {'cards': cards})
-
 def add_card(request):
     cards = card.objects.all()
     form = CardForm()
@@ -49,6 +45,8 @@ def delete_card(request, card_id):
 
 @login_required
 def edit_profile(request):
+    cards = card.objects.all()
+
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -59,47 +57,47 @@ def edit_profile(request):
         form = UserEditForm(instance=request.user)
     
     context = {
-        'form': form
+        'form': form,
+        'cards':cards,
     }
     return render(request, 'edit_profile.html', context)
 
 @login_required
 def register(request):
+    cards = card.objects.all()
+
     form = SignUpForm()
     password_form = PasswordChangeForm(request.user)
     
     if request.method == 'POST':
-        if 'current_password' in request.POST:  # Si se envía 'current_password', se está actualizando la contraseña
+        if 'old_password' in request.POST:  # Cambio de contraseña
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)  # Actualiza la sesión con la nueva contraseña
-                messages.success(request, 'Tu contraseña ha sido cambiada con éxito')
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Tu contraseña ha sido cambiada con éxito.', extra_tags='password_change')
                 return redirect('edit_profile')
             else:
-                print('contraseña incorrecta')
-        else:  # Caso contrario, se está registrando un nuevo usuario
+                messages.error(request, 'Por favor corrige los errores en el formulario de contraseña.', extra_tags='password_change')
+        else:  # Registro de nuevo usuario
             form = SignUpForm(request.POST)
             if form.is_valid():
                 user = form.save(commit=False)
                 user.email = form.cleaned_data.get('email')
+                user.is_staff = True
                 user.save()
-                messages.success(request, f'Cuenta creada para {user.username}!')
+                messages.success(request, f'Cuenta creada para {user.username}!', extra_tags='user_registration')
                 
-                # Loguear automáticamente al usuario después del registro
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password1']
-                user = authenticate(username=username, password=password)
-                login(request, user)
-                messages.success(request, 'Tu contraseña ha sido cambiada con éxito')
-            else:
-                print('Error al registrar al usuario')
                 
+                messages.success(request, 'Te has registrado y logueado con éxito.', extra_tags='user_registration')
                 return redirect('edit_profile')
+            else:
+                messages.error(request, 'Por favor corrige los errores en el formulario de registro.', extra_tags='user_registration')
 
     context = {
         'form': form,
         'password_form': password_form,
+        'cards':cards,
     }
     return render(request, 'edit_profile.html', context)
 
@@ -111,7 +109,7 @@ def login_password(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('side')  # Redirige a la página de gestión de imágenes
+            return redirect('prueba')  # Redirige a la página de gestión de imágenes
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
             return redirect(request.path_info)
@@ -156,6 +154,8 @@ def gestion_gallipan(request):
 
 @login_required
 def gestion_muelle(request):
+    cards = card.objects.all()
+
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
@@ -185,6 +185,7 @@ def gestion_muelle(request):
     imagenes_muelle = ImagenMuelle.objects.all()
     context = {
         'imagenesMuelle': imagenes_muelle,
+        'cards':cards,
     }
     return render(request, 'muelle.html', context)
 
@@ -196,66 +197,26 @@ def logout_view(request):
     logout(request)
     return redirect('login_password')
 
-@login_required
-def panel(request):
-    return render(request,'choose_file.html')
-
 def codigo_qr(request):
     return render(request,'codigo_qr.html')
 
 def muelle_qr(request):
     return render(request,'muelle_qr.html')
 
-def upload(request):
-    return render(request,'upload.html')
 def prueba(request):
     return render(request,'prueba.html')
 
 def login_view(request):
     return render(request, 'login.html')
 
-def upload_view(request):
-    if request.method == 'POST' and 'image' in request.FILES:
-        uploaded_image = request.FILES['image']
-        
-        # Abre la imagen utilizando PIL
-        img = Image.open(uploaded_image)
-        
-        # Redimensiona la imagen a 800x800 píxeles (manteniendo la proporción)
-        img.thumbnail((800, 800))
-        
-        # Crea el directorio temporal si no existe
-        temp_directory = 'C:\\tmp\\'
-        os.makedirs(temp_directory, exist_ok=True)
-        
-        # Guarda la imagen redimensionada en un archivo temporal
-        temp_image_path = os.path.join(temp_directory, uploaded_image.name)
-        img.save(temp_image_path)
-        
-        # Crea un objeto SimpleUploadedFile para la imagen redimensionada
-        temp_image = open(temp_image_path, 'rb')
-        temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
-        
-        # Guarda la imagen redimensionada en el modelo
-        imagen = Imagen(imagen=temp_uploaded_image)
-        imagen.save()
-        
-        # Cierra y elimina el archivo temporal
-        temp_image.close()
-        os.remove(temp_image_path)
-        
-        messages.success(request, 'La imagen se subió correctamente.')
-    else:
-        pass
-    
-    return render(request, 'upload.html')
 
 def menu_view(request):
     return render(request,'menu.html')
 
 @login_required
-
 def image_management_view2(request):
+    cards = card.objects.all()
+
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
@@ -302,6 +263,7 @@ def image_management_view2(request):
     imagenes = Imagen.objects.all().order_by('order')
     context = {
         'imagenes': imagenes,
+        'cards':cards,
     }
     return render(request, 'menu_gallipan.html', context)
 
@@ -328,6 +290,8 @@ def delete_image(request):
 
 @login_required
 def menu_muelle(request):
+    cards = card.objects.all()
+
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
@@ -357,6 +321,7 @@ def menu_muelle(request):
     imagenes_muelle = ImagenMuelle.objects.all()
     context = {
         'imagenesMuelle': imagenes_muelle,
+        'cards':cards,
     }
     return render(request, 'menu_muelle.html', context)
 
@@ -371,6 +336,7 @@ def image_management_view(request):
 
 
 def side(request):
+    cards = card.objects.all()
     if request.method == 'POST':
         if 'delete_image_id' in request.POST:
             imagen_id = request.POST.get('delete_image_id')
@@ -400,6 +366,7 @@ def side(request):
     imagenes_muelle = ImagenMuelle.objects.all()
     context = {
         'imagenesMuelle': imagenes_muelle,
+        'cards':cards,
     }
     return render(request, 'side.html', context)
 

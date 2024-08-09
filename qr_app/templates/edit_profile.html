@@ -58,20 +58,18 @@
                     <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
                         Registrar
                     </button>
+                    <!-- Mostrar mensajes específicos para el registro -->
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            {% if 'user_registration' in message.tags %}
+                                <div class="message-success">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </form>
             </div>
-    
-            <!-- Mostrar mensajes -->
-            {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                        <div class="message-success">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-    
-            <!-- Cuadro de Cambio de Contraseña -->
-            
         </div>
     </div>
     <div class="flex items-center justify-center min-h-screen bg-gray-800 dark:text-red-800">
@@ -100,12 +98,22 @@
                 <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700">
                     Guardar cambios
                 </button>
+                <!-- Mostrar mensajes específicos para el cambio de contraseña -->
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        {% if 'password_change' in message.tags %}
+                            <div class="message-success">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </form>
         </div>
     </div>
 </div>
-
 {% endblock %}
+
 
 {% block extra_js %}
 <script src="{% static 'js/edit_profile.js' %}"></script>

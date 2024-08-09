@@ -19,8 +19,7 @@ urlpatterns = [
     #urls para el admin
     path('login/', views.login_password, name='login_password'),
     path('logout/', views.logout_view, name='logout'),
-    path('upload/', views.upload_view, name='upload'),
-    path('panel/', views.panel, name='panel'),
+    #editar perfil de usuario y cambiar contraseña
     path('edit-profile/', views.register, name='edit_profile'),
     #links para ver el menu de los qr
     path('menu-gallipan/', views.image_management_view2, name='menu-gallipan'),
