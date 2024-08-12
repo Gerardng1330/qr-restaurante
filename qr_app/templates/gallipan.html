@@ -4,53 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}">
-    <title>Gestión de imágenes Gallipan</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/gestion.css' %}">
+    <title>Menú Gallipan</title>
 </head>
-<body class="bg-gray-900 text-white flex h-screen">
-    <!-- Sidebar -->
-    <div class="w-64 bg-gray-800 p-4 flex flex-col items-center">
-        <a href="{% url 'inicio' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Inicio</a>
-        <a href="{% url 'gestion-gallipan' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Gallipan</a>
-        <a href="{% url 'gestion-muelle' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Muelle Restaurante</a>
-        <a href="{% url 'logout' %}" class="w-full text-center bg-red-500 text-white px-4 py-2 rounded m-2 hover:bg-red-600">Cerrar sesión</a>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="flex-grow p-6">
-        <h1 class="text-center text-4xl mt-6">Gestión de imágenes Gallipan</h1>
-        <div class="flex flex-wrap justify-center mt-4">
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-gray-500 container py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {% for imagen in imagenes %}
-            <div class="m-4 p-4 bg-gray-800 rounded-lg">
-                <div class="text-center mb-2">{{ forloop.counter }}</div>
-                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
-                <form action="{% url 'gestion-gallipan' %}" method="POST" class="text-center">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_image_id" value="{{ imagen.id }}">
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-                </form>
+            <div class="bg-white p-4 rounded shadow">
+                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="w-full h-auto object-cover">
             </div>
             {% endfor %}
         </div>
-        <form id="uploadFormGallipan" action="{% url 'gestion-gallipan' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
-            {% csrf_token %}
-            <div class="mb-3">
-                <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
-            </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir imagen</button>
-        </form>
-        <div class="mt-4 text-center">
-            <a href="/menu" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ver Menu</a>
-        </div>
-        {% if messages %}
-            <div class="mt-4 text-center">
-                {% for message in messages %}
-                    <div class="text-red-500">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
     </div>
 </body>
+
 </html>

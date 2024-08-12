@@ -9,13 +9,13 @@
 {% block content %}
 <div class="flex-grow p-6">
     <h1 class="text-center text-4xl mt-6 text-gray-900 dark:text-white">Gestión de imágenes Gallipan</h1>
-    <div class="flex flex-wrap justify-center mt-4">
+    <div class="flex flex-wrap justify-center mt-4 lg:grid-cols-1 gap-40">
         {% for imagen in imagenes %}
         <div class="m-4 p-4 bg-gray-200 dark:bg-gray-800 border border-black rounded-lg">
             <div class="text-center mb-2 text-gray-900 dark:text-white">{{ forloop.counter }}</div>
             <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
             <div class="ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-5">
-                <div class="flex justify-center mb-2">
+                <div class="flex justify-center mb-2 ">
                     <!-- Botón de mover arriba -->
                     <form action="{% url 'menu-gallipan' %}" method="POST" class="mr-2">
                         {% csrf_token %}

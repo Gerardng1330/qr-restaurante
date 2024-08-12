@@ -118,39 +118,8 @@ def login_password(request):
 
 @login_required
 def gestion_gallipan(request):
-    cards = card.objects.all()
-
-    if request.method == 'POST':
-        if 'delete_image_id' in request.POST:
-            imagen_id = request.POST.get('delete_image_id')
-            imagen = get_object_or_404(Imagen, id=imagen_id)
-            imagen.delete()
-            messages.success(request, 'Imagen de Gallipan eliminada con éxito')
-        elif 'image' in request.FILES:
-            uploaded_image = request.FILES['image']
-            if not uploaded_image:
-                messages.error(request, 'No se seleccionó ninguna imagen.')
-            else:
-                img = Image.open(uploaded_image)
-                img.thumbnail((800, 800))
-                temp_directory = 'C:\\tmp\\'
-                os.makedirs(temp_directory, exist_ok=True)
-                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
-                img.save(temp_image_path)
-                temp_image = open(temp_image_path, 'rb')
-                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
-                nueva_imagen = Imagen(imagen=temp_uploaded_image)
-                nueva_imagen.save()
-                messages.success(request, 'Imagen subida a Gallipan con éxito')
-                temp_image.close()
-                os.remove(temp_image_path)
-        return redirect('gestion-gallipan')
-
     imagenes = Imagen.objects.all()
-    context = {
-        'imagenes': imagenes,
-    }
-    return render(request, 'gallipan.html', context,{'cards': cards})
+    return render(request, 'gallipan.html',{'imagenes':imagenes})
 
 @login_required
 def gestion_muelle(request):
@@ -372,7 +341,7 @@ def side(request):
 
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR
-    local_url = "http://127.0.0.1:2000/pagina"
+    local_url = "https://www.google.com/"
 
     # Crear el código QR
     qr = qrcode.QRCode(
