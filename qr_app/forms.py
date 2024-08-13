@@ -7,6 +7,7 @@ class CardForm(forms.ModelForm):
     class Meta:
         model = card
         fields = ['title','imagen_card']
+                
 
 class UserEditForm(forms.ModelForm):
     class Meta:

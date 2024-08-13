@@ -15,12 +15,36 @@
         {% for imagenMuelle in imagenesMuelle %}
         <div class="m-4 p-4 bg-gray-200 dark:bg-gray-800 border border-black rounded-lg">
             <div class="text-center mb-2 text-gray-900 dark:text-white">{{ forloop.counter }}</div>
+            
             <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
-            <form action="{% url 'menu-muelle' %}" method="POST" class="text-center">
-                {% csrf_token %}
-                <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
-            </form>
+            <div class="ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-5">
+
+                <div class="flex justify-center mb-2">
+                    <!-- Botón de mover arriba -->
+                    <form action="{% url 'menu-muelle' %}" method="POST" class="mr-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="move_image_id" value="{{ imagenMuelle.id }}">
+                        <input type="hidden" name="move_action" value="up">
+                        <button type="submit" class="bg-blue-900 text-white px-5 py-4 rounded hover:bg-blue-600">
+                            ↑
+                        </button>
+                    </form>
+                    <!-- Botón de mover abajo -->
+                    <form action="{% url 'menu-muelle' %}" method="POST" class="ml-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="move_image_id" value="{{ imagenMuelle.id }}">
+                        <input type="hidden" name="move_action" value="down">
+                        <button type="submit" class="bg-blue-900 text-white px-5 py-4 rounded hover:bg-blue-600">
+                            ↓
+                        </button>
+                    </form>
+                </div>
+                <form action="{% url 'menu-muelle' %}" method="POST" class="text-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
+                </form>
+            </div>
         </div>
         {% endfor %}
     </div>

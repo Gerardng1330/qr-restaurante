@@ -4,18 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Gallipan</title>
+    <title>Visor de Imágenes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="bg-gray-500 container py-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<body class="bg-gray-700">
+    <div class="bg-gray-700 w-full max-w-4xl mx-auto p-6  shadow-lg rounded">
+        <div class="space-y-6">
             {% for imagen in imagenes %}
-            <div class="bg-white p-4 rounded shadow">
-                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="w-full h-auto object-cover">
+            <div class="relative w-full bg-gray-700 p-4">
+                <img src="{{ imagen.imagen.url }}" alt="Imagen" class="w-full h-auto object-contain border border-gray-300 rounded">
             </div>
             {% endfor %}
         </div>
     </div>
 </body>
-
 </html>

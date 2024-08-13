@@ -1,7 +1,6 @@
 {% extends 'side.html' %}
 {% load static %}
 {% block extra_css %}
-
 <link rel="stylesheet" href="{% static 'css/menu_muelle.css' %}">
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -15,7 +14,7 @@
             <div class="text-center mb-2 text-gray-900 dark:text-white">{{ forloop.counter }}</div>
             <img src="{{ imagen.imagen.url }}" alt="Imagen" class="mb-2">
             <div class="ml-4 mr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-5">
-                <div class="flex justify-center mb-2 ">
+                <div class="flex justify-center mb-2">
                     <!-- Botón de mover arriba -->
                     <form action="{% url 'menu-gallipan' %}" method="POST" class="mr-2">
                         {% csrf_token %}
@@ -65,5 +64,4 @@
         </div>
     {% endif %}
 </div>
-
 {% endblock %}

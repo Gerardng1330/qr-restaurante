@@ -149,14 +149,34 @@ def gestion_muelle(request):
                 messages.success(request, 'Imagen subida a Muelle Restaurante con éxito')
                 temp_image.close()
                 os.remove(temp_image_path)
-        return redirect('gestion-muelle')
+        elif 'move_image_id' in request.POST:
+            image_id = request.POST['move_image_id']
+            action = request.POST['move_action']
+            image = get_object_or_404(ImagenMuelle, id=image_id)
 
-    imagenes_muelle = ImagenMuelle.objects.all()
+            if action == 'up':
+                previous_image = ImagenMuelle.objects.filter(order__lt=image.order).order_by('-order').first()
+                if previous_image:
+                    image.order, previous_image.order = previous_image.order, image.order
+                    image.save()
+                    previous_image.save()
+            elif action == 'down':
+                next_image = ImagenMuelle.objects.filter(order__gt=image.order).order_by('order').first()
+                if next_image:
+                    image.order, next_image.order = next_image.order, image.order
+                    image.save()
+                    next_image.save()
+
+        return redirect('menu-muelle')
+
+    # Ordenar las imágenes por el campo `order`
+    imagenes_muelle = ImagenMuelle.objects.all().order_by('order')
     context = {
         'imagenesMuelle': imagenes_muelle,
-        'cards':cards,
+        'cards': cards,
     }
-    return render(request, 'muelle.html', context)
+    return render(request, 'menu_muelle.html', context)
+
 
 @login_required
 def gestion_inicio(request):
@@ -215,26 +235,34 @@ def image_management_view2(request):
             action = request.POST['move_action']
             image = Imagen.objects.get(id=image_id)
 
+            print(f"Moving image ID {image_id} {action} - Current order: {image.order}")
+
             if action == 'up':
                 previous_image = Imagen.objects.filter(order__lt=image.order).order_by('-order').first()
                 if previous_image:
+                    print(f"Previous image order: {previous_image.order}")
+                    # Intercambia los valores de 'order'
                     image.order, previous_image.order = previous_image.order, image.order
                     image.save()
                     previous_image.save()
             elif action == 'down':
                 next_image = Imagen.objects.filter(order__gt=image.order).order_by('order').first()
                 if next_image:
+                    print(f"Next image order: {next_image.order}")
+                    # Intercambia los valores de 'order'
                     image.order, next_image.order = next_image.order, image.order
                     image.save()
                     next_image.save()
+
         return redirect('menu-gallipan')
 
     imagenes = Imagen.objects.all().order_by('order')
     context = {
         'imagenes': imagenes,
-        'cards':cards,
+        'cards': cards,
     }
     return render(request, 'menu_gallipan.html', context)
+
 
 @csrf_exempt
 def delete_image(request):

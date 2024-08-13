@@ -23,12 +23,12 @@ urlpatterns = [
     path('edit-profile/', views.register, name='edit_profile'),
     #links para ver el menu de los qr
     path('menu-gallipan/', views.image_management_view2, name='menu-gallipan'),
-    path('menu-muelle/', views.menu_muelle, name='menu-muelle'),
+    path('menu-muelle/', views.gestion_muelle, name='menu-muelle'),
     path('side/', views.side, name='side'),
     path('inicio/', views.gestion_inicio, name='inicio'),
     #links de qr
     path('gallipan/', views.gestion_gallipan, name='gestionGallipan'),
-    path('muelle/', views.gestion_muelle, name='gestionMuelle'),
+    #path('muelle/', views.gestion_muelle, name='gestionMuelle'),
     path('login/gestion_de_imagenes/', views.image_management_view, name='image_management_view'),
     path('delete/<int:imagen_id>/', views.delete_image, name='delete_image'),
     path('delete_muelle/<int:imagen_id>/', views.delete_image_muelle, name='delete_image_muelle'),

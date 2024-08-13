@@ -12,9 +12,7 @@
 <body class="bg-gray-900 text-white flex h-screen">
     <!-- Sidebar -->
     <div class="w-64 bg-gray-800 p-4 flex flex-col items-center">
-        <a href="{% url 'inicio' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Inicio</a>
-        <a href="{% url 'gestion-gallipan' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Gallipan</a>
-        <a href="{% url 'gestion-muelle' %}" class="w-full bg-blue-500 text-white px-4 py-2 rounded m-2 hover:bg-blue-600">Muelle Restaurante</a>
+        
         <a href="{% url 'logout' %}" class="w-full text-center bg-red-500 text-white px-4 py-2 rounded m-2 hover:bg-red-600">Cerrar sesión</a>
     </div>
     
@@ -26,7 +24,7 @@
             <div class="m-4 p-4 bg-gray-800 rounded-lg">
                 <div class="text-center mb-2">{{ forloop.counter }}</div>
                 <img src="{{ imagenMuelle.imagen_muelle.url }}" alt="Imagen" class="mb-2">
-                <form action="{% url 'gestion-muelle' %}" method="POST" class="text-center">
+                <form  method="POST" class="text-center">
                     {% csrf_token %}
                     <input type="hidden" name="delete_image_id" value="{{ imagenMuelle.id }}">
                     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Borrar</button>
@@ -34,7 +32,7 @@
             </div>
             {% endfor %}
         </div>
-        <form id="uploadFormMuelle" action="{% url 'gestion-muelle' %}" method="POST" enctype="multipart/form-data" class="text-center mt-4">
+        <form id="uploadFormMuelle" method="POST" enctype="multipart/form-data" class="text-center mt-4">
             {% csrf_token %}
             <div class="mb-3">
                 <input class="block w-full text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none" type="file" name="image" accept=".jpg, .jpeg, .png">
