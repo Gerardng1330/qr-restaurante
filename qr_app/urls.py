@@ -28,6 +28,7 @@ urlpatterns = [
     path('inicio/', views.gestion_inicio, name='inicio'),
     #links de qr
     path('gallipan/', views.gestion_gallipan, name='gestionGallipan'),
+    path('card/', views.otroCard, name='otroCard'),
     #path('muelle/', views.gestion_muelle, name='gestionMuelle'),
     path('login/gestion_de_imagenes/', views.image_management_view, name='image_management_view'),
     path('delete/<int:imagen_id>/', views.delete_image, name='delete_image'),

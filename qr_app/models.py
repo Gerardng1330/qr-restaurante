@@ -8,6 +8,7 @@ from PIL import Image, ImageDraw
 class card(models.Model):
     title=models.CharField(max_length=200)
     imagen_card=models.ImageField(upload_to='card/')
+    order = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return self.title
@@ -24,9 +25,11 @@ class Imagen(models.Model):
 class ImagenMuelle(models.Model):
     imagen_muelle = models.ImageField(upload_to='imagenesMuelle/')
     order = models.PositiveIntegerField(default=0)
+
+class ImagenOtroCard(models.Model):
+    imagen_otroCard = models.ImageField(upload_to='imagenesOtroCard/')
+    order = models.PositiveIntegerField(default=0)
  
-
-
 #tabla para guardar el usuario y la contraseña
 class LoginForm(models.Model):
     username = models.CharField(max_length=255)

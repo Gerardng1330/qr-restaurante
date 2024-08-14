@@ -19,7 +19,7 @@ from .forms import UserEditForm
 from .forms import SignUpForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from .models import card
+from .models import card,ImagenOtroCard
 from .forms import CardForm
 
 def add_card(request):
@@ -181,6 +181,66 @@ def gestion_muelle(request):
 @login_required
 def gestion_inicio(request):
     return render(request,'inicio.html')
+
+def otroCard(request):
+    cards = card.objects.all()
+    card_obj = card.objects.first()
+    imagenes = ImagenOtroCard.objects.all().order_by('order')
+
+    if request.method == 'POST':
+        if 'delete_image_id' in request.POST:
+            imagen_id = request.POST.get('delete_image_id')
+            imagen_otroCard = get_object_or_404(ImagenOtroCard, id=imagen_id)
+            imagen_otroCard.delete()
+            messages.success(request, 'Imagen eliminada con éxito')
+
+        elif 'image' in request.FILES:
+            uploaded_image = request.FILES['image']
+            if not uploaded_image:
+                messages.error(request, 'No se seleccionó ninguna imagen.')
+            else:
+                img = Image.open(uploaded_image)
+                img.thumbnail((800, 800))  # Ajusta el tamaño de la imagen
+                temp_directory = 'C:\\tmp\\'
+                os.makedirs(temp_directory, exist_ok=True)
+                temp_image_path = os.path.join(temp_directory, uploaded_image.name)
+                img.save(temp_image_path)
+                temp_image = open(temp_image_path, 'rb')
+                temp_uploaded_image = SimpleUploadedFile(uploaded_image.name, temp_image.read())
+                nueva_imagen = ImagenOtroCard(imagen_otroCard=temp_uploaded_image)
+                nueva_imagen.save()
+                messages.success(request, 'Imagen subida a Gallipan con éxito')
+                temp_image.close()
+                os.remove(temp_image_path)
+
+        elif 'move_image_id' in request.POST:
+            image_id = request.POST['move_image_id']
+            action = request.POST['move_action']
+            image = ImagenOtroCard.objects.get(id=image_id)
+
+            if action == 'up':
+                previous_image = ImagenOtroCard.objects.filter(order__lt=image.order).order_by('-order').first()
+                if previous_image:
+                    image.order, previous_image.order = previous_image.order, image.order
+                    image.save()
+                    previous_image.save()
+            elif action == 'down':
+                next_image = ImagenOtroCard.objects.filter(order__gt=image.order).order_by('order').first()
+                if next_image:
+                    image.order, next_image.order = next_image.order, image.order
+                    image.save()
+                    next_image.save()
+
+        return redirect('otroCard')
+
+    context = {
+        'imagenes': imagenes,
+        'cards': cards,
+        'card_obj': card_obj,
+
+    }
+    return render(request, 'otroCard.html', context)
+
 
 def logout_view(request):
     logout(request)
