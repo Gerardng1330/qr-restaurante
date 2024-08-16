@@ -88,8 +88,13 @@ WSGI_APPLICATION = 'qr_main.wsgi.application'
 
 DATABASES = {
        'default': {
-           'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / "db.sqlite3",
+           'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'qr_l8l9',
+            'USER': 'qr_l8l9_user',
+            'PASSWORD': '3VCy3lYdqnhZZ2BFyd0gYvzlieDOrWvx',
+            'HOST': 'dpg-cqum8mbtq21c73b7c920-a',
+            'PORT': '5432',
+
        }
    }
 # Password validation
