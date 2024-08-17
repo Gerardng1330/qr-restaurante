@@ -67,7 +67,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend')
+            os.path.join(BASE_DIR,'templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -138,9 +138,9 @@ MESSAGE_TAGS = {
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-     os.path.join(BASE_DIR,'qr_app/static')
+     os.path.join(BASE_DIR,'static')
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','qr_app/static')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
