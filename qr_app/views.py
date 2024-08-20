@@ -122,6 +122,11 @@ def gestion_gallipan(request):
     return render(request, 'gallipan.html',{'imagenes':imagenes})
 
 @login_required
+def ver_muelle(request):
+    imagenes = ImagenMuelle.objects.all()
+    return render(request, 'muelle.html',{'imagenes':imagenes})
+
+@login_required
 def gestion_muelle(request):
     cards = card.objects.all()
 
