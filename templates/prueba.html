@@ -27,7 +27,9 @@
                     <div class="form-group">
                         {{ form.title.label_tag }}
                         {{ form.title }}
-                        {{ form.title.errors }}
+                        <div class="bg-gray-100">
+                         {{ form.title.errors }}
+                        </div>
                     </div>
                     <div class="form-group">
                         {{ form.imagen_card.label_tag }}
@@ -63,7 +65,7 @@
                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Eliminar
                     </button>
-                    <button type="submit" class="bg-gray-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="button" id="cancelButton" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Cancelar
                     </button>
                 </div>
@@ -218,7 +220,7 @@
         const closeModalButtonDelete = document.getElementById('closeModalButtonDelete');
         const deleteCardIdInput = document.getElementById('deleteCardId');
         const deleteForm = document.getElementById('deleteForm');
-
+        const cancelButton = document.getElementById('cancelButton');
         openModalButtonsDelete.forEach(button => {
             button.addEventListener('click', function() {
                 const cardId = button.getAttribute('data-card-id');
@@ -232,7 +234,9 @@
             modalDelete.classList.add('hidden');
         });
 
-        
+        cancelButton.addEventListener('click',function(){
+            modalDelete.classList.add('hidden');
+        });
     });
 </script>
 {% endblock %}

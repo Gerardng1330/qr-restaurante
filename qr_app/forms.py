@@ -14,8 +14,9 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'border border-black rounded p-2'}),
-            'imagen_card': forms.ClearableFileInput(attrs={'class': 'border border-gray-300 rounded p-2'}),
+            'first_name': forms.TextInput(attrs={'class': 'border border-black rounded p-2'}),
+            'last_name': forms.TextInput(attrs={'class': 'border border-black rounded p-2'}),
+            'email': forms.EmailInput(attrs={'class': 'border border-black rounded p-2'}),
         }
 
 

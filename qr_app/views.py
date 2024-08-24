@@ -87,9 +87,6 @@ def register(request):
                 user.is_staff = True
                 user.save()
                 messages.success(request, f'Cuenta creada para {user.username}!', extra_tags='user_registration')
-                
-                
-                messages.success(request, 'Te has registrado y logueado con éxito.', extra_tags='user_registration')
                 return redirect('edit_profile')
             else:
                 messages.error(request, 'Por favor corrige los errores en el formulario de registro.', extra_tags='user_registration')

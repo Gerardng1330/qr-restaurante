@@ -17,7 +17,7 @@ urlpatterns = [
     path('qr-code/', views.qr_code_view, name='qr_code_view'),
     path('muelle-qr-code/',views.muelle_qr_view, name='qr_muelle_view'),
     #urls para el admin
-    path('login/', views.login_password, name='login_password'),
+    path('', views.login_password, name='login_password'),
     path('logout/', views.logout_view, name='logout'),
     #editar perfil de usuario y cambiar contraseña
     path('edit-profile/', views.register, name='edit_profile'),
