@@ -98,6 +98,8 @@ def register(request):
     }
     return render(request, 'edit_profile.html', context)
 
+def f2f(request):
+    return render(request, 'f2f.html')
 
 def login_password(request):
     if request.method == 'POST':

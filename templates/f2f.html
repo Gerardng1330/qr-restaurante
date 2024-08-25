@@ -1,0 +1,747 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+ 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="{% static 'css/f2f.css' %}">
+    <title>F2F Formulario</title>
+
+  </head>
+  <body id="arv-body" class="notranslate">
+
+    <div class="arv-main-wrapper">
+
+      <div class="arv-form-wrapper">
+
+
+        <form action="/" method="post" enctype="multipart/form-data">
+
+          <div class="arv-input-flex">
+
+            <div>
+              <label for="firstname" class="arv-form-label"> Nombre</label>
+              <!--  -->
+                <input
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  placeholder="Tu nombre"
+                  class="arv-form-input"
+                  required
+                />
+            </div>
+
+
+            <div>
+              <label for="lastname" class="arv-form-label"> Apellido </label>
+                <input
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  placeholder="Tu apellido"
+                  class="arv-form-input"
+                  required
+                />
+            </div>
+        </div>
+
+
+          <div class="arv-input-flex">
+            <div>
+              <label for="email" class="arv-form-label"> Email </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="ejemplo@email.com"
+                  class="arv-form-input"
+                  required
+                />
+                <div class="arv-space-down">
+                  <label for="nation" class="arv-form-label">Nacionalidad</label>
+                  <select class="arv-form-input" name="nation" id="combo" required>
+                    <option value=""disabled selected>Elige una nacionalidad</option>
+                    <option value="Panama">Panamá</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Cuba">Cuba</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="United-States">United States</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Haiti">Haití</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Mexico">México</option>
+                    <option value="Nicaragua">Nicaragua</option>
+                    <option value="Peru">Perú</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="Otra">Otra</option>
+                  </select>
+                </div>
+            </div>
+          <div>
+
+
+          <label for="gender" class="arv-form-label">Género</label>
+            <select class="arv-form-input" name="gender" id="combo" required>
+              <option value="" selected disabled>Elige una opción</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
+            </select>
+
+
+          <div class="arv-space-down">
+            <label for="age" class="arv-form-label">Edad</label>
+            <select class="arv-form-input" name="age" id="combo" required>
+              <option value=""disabled selected>Selecciona tu edad</option>
+              <option value="less-18">Menos de 18 años</option>
+              <option value="19-21">19 a 21 años</option>
+              <option value="22-30">22 a 30 años</option>
+              <option value="31-40">31 a 40 años</option>
+              <option value="41-50">41 a 50 años</option>
+              <option value="51-60">51 a 60 años</option>
+              <option value="more-61">Mas de 61 años</option>
+            </select>
+          </div>
+
+
+        </div>
+      </div>
+
+
+          <div class="arv-mb-3 arv-input-wrapp">
+            <label for="phone" class="arv-form-label"> Télefono </label>
+            <div>
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="areacode"
+                id="areacode"
+                placeholder="Codigo de area"
+                class="arv-form-input arv-w-45"
+                required
+              />
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="phone"
+                id="phone"
+                placeholder="Número de télefono"
+                class="arv-form-input"
+                required
+              />
+            </div>
+          </div>
+
+
+          <div class="arv-mb-3 arv-input-wrapp">
+            <label for="phone" class="arv-form-label"> Télefono 2 </label>
+            <div>
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="areacode2"
+                id="areacode2"
+                placeholder="Codigo de area"
+                class="arv-form-input arv-w-45"
+                required
+              />
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="phone2"
+                id="phone2"
+                placeholder="Número de télefono"
+                class="arv-form-input"
+                required
+              />
+            </div>
+          </div>
+          
+
+          <div class="arv-space-down arv-input-wrapp">
+            <label for="phone" class="arv-form-label"> Contacto de emergencia </label>
+            <div>
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="emergency_areacode"
+                id="emergency_areacode"
+                placeholder="Codigo de area"
+                class="arv-form-input arv-w-45"
+                required
+              />
+              <input
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                name="emergency_phone"
+                id="emergency_phone"
+                placeholder="Número télefono"
+                class="arv-form-input"
+                required
+              />
+            </div>
+              <input
+                type="text"
+                name="emergency_name"
+                id="emergency_name"
+                placeholder="Nombre del contacto"
+                class="arv-form-input arv-space-down"
+                required
+              />
+          </div>
+
+          
+          <div class="arv-space-down">
+            <label for="birthday" class="arv-form-label">Cumpleaños?</label>
+            <input 
+              type="text" 
+              name="birthday"
+              id="birthday"
+              class="date-form-input"
+              placeholder="Fri Apr 01 2001"
+              readonly
+              required
+            />
+            <span id="cal-icon-birthday" class="date-picker-icon"><i class="far fa-calendar-alt"></i></span>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="startdate" class="arv-form-label"> Cuando puedes empezar? </label>
+              <input
+                type="text"
+                name="startdate"
+                id="startdate"
+                placeholder="Fri Apr 01 2001"
+                class="date-form-input"
+                readonly
+                required
+              />
+              <span id="cal-icon-startdate" class="date-picker-icon"><i class="far fa-calendar-alt"></i></span>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="position" class="arv-form-label">Cargo deseado 1</label>
+            <select class="arv-form-input" name="position" id="combo" required>
+              <option value=""disabled selected>Elige tu cargo</option>
+              <option value="Housekeeping-Limpieza">Housekeeping - Limpieza</option>
+              <option value="Mantenimiento general">Mantenimiento general</option>
+              <option value="Ayudante de cocina">Ayudante de cocina</option>
+              <option value="Recepcion">Recepción</option>
+            </select>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="position" class="arv-form-label">Cargo deseado 2</label>
+            <select class="arv-form-input" name="position2" id="combo">
+              <option value=""disabled selected>Elige tu cargo</option>
+              <option value="Housekeeping - Limpieza">Housekeeping - Limpieza</option>
+              <option value="Mantenimiento general">Mantenimiento general</option>
+              <option value="Ayudante de cocina">Ayudante de cocina</option>
+              <option value="Recepcion">Recepción</option>
+            </select>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="address" class="arv-form-label"> Dirección </label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                placeholder="Dirección principal"
+                class="arv-form-input"
+                required
+              />
+              <input
+                type="text"
+                name="address2"
+                id="address2"
+                placeholder="Dirección secundaria"
+                class="arv-form-input arv-space-down"
+              />
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="physical-handicap" class="arv-form-label"> Tienes alguna discapacidad o alergias? </label>
+            <input
+              type="text"
+              name="physical-handicap"
+              id="physical-handicap"
+              placeholder="Cuentanos cual"
+              class="arv-form-input"
+              required
+            />
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="transport" class="arv-form-label">
+              Transporte que utilizas
+            </label>
+            <div class="arv-radio-flex">
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="transport"
+                    id="ans-bus"
+                    value="Bus"
+                    required
+                  />
+                    Bus
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="transport"
+                  id="ans-owncar"
+                  value="Carro propio"
+                  required
+                />
+                  Carro propio
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="transport"
+                  id="ans-uber"
+                  value="Uber"
+                  required
+                />
+                  Uber
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="transport"
+                  id="ans-other"
+                  value="Otro"
+                  required
+                />
+                  Otro
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="lang-level" class="arv-form-label" required>
+              Nivel de inglés
+            </label>
+    
+            <div class="arv-radio-flex">
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="lang-level"
+                    id="lve"
+                    value="Nulo"
+                    required
+                  />
+                  Nulo
+                  <input
+                    class="arv-form-otherinput"
+                    type="text"
+                    placeholder="Lenguaje nativo?"
+                    name="ans-input-lang"
+                    id="ans-input-lang"
+                    required
+                  />
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="lang-level"
+                  id="lve"
+                  value="Basico"
+                  required
+                />
+                  Básico
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="lang-level"
+                  id="lve"
+                  value="Medio"
+                  required
+                />
+                  Medio
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="lang-level"
+                  id="lve"
+                  value="Avanzado"
+                  required
+                />
+                  Avanzado
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="lang-level"
+                  id="lve"
+                   value="Nativo"
+                  required
+                />
+                  Nativo
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="shift-work" class="arv-form-label" required>
+              Turno deseado
+            </label>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="shift-work"
+                  id="ans-morning"
+                  value="Temprano"
+                  required
+                />
+                  Mañana
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="shift-work"
+                  id="ans-afternoon"
+                  value="Tarde"
+                  required
+                />
+                  Tarde
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+    
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="shift-work"
+                  id="ans-night"
+                  value="Noche"
+                  required
+                />
+                  Noche
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+
+            <div class="arv-radio-group">
+            <label class="arv-radio-label">
+              <input
+                class="arv-input-radio"
+                type="radio"
+                name="shift-work"
+                id="ans-overnight"
+                value="Madrugada"
+                required
+              />
+                Madrugada
+              <span class="arv-radio-checkmark"></span>
+            </label>
+          </div>
+
+          
+          <div class="arv-space-down">
+            <label for="carry-lb" class="arv-form-label" required>
+              Puedes levantar mas de 50LB?
+            </label>
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="carry-lb"
+                  id="ans-yes"
+                  Value="Si"
+                  required
+                />
+                  Si
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+            <div class="arv-radio-group">
+              <label class="arv-radio-label">
+                <input
+                  class="arv-input-radio"
+                  type="radio"
+                  name="carry-lb"
+                  id="ans-no"
+                  value="No"
+                  required
+                />
+                  No
+                <span class="arv-radio-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+
+          <div class="arv-space-down">
+            <label for="ans" class="arv-form-label" required>
+              Como nos conociste?
+            </label>
+    
+            <div class="arv-radio-flex">
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans"
+                    value="Referencia de un amigo"
+                    required
+                  />
+                    Referencia de un amigo
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans"
+                    value="Sticker con qr"
+                    required
+                  />
+                    Sticker con qr
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans"
+                    value="Bolante"
+                    required
+                  />
+                    Bolante
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans"
+                    value="Oficina"
+                    required
+                  />
+                    Oficina
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans"
+                    value="Google"
+                    required
+                  />
+                    Google
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+              <div class="arv-radio-group">
+                <label class="arv-radio-label">
+                  <input
+                    class="arv-input-radio"
+                    type="radio"
+                    name="ans"
+                    id="ans-radio"
+                    value="Otros"
+                    required
+                  />
+                    Otros
+                  <input
+                    class="arv-form-otherinput2"
+                    type="text"
+                    placeholder="Donde?"
+                    name="ans-input"
+                    id="ans-input"
+                    required
+                  />
+                  <span class="arv-radio-checkmark"></span>
+                </label>
+              </div>
+            </div>
+
+
+            <div>
+              <label for="referred-by" class="arv-form-label">Referido por</label>
+              <input
+                type="text"
+                name="referred-by"
+                id="referred-by"
+                placeholder="Tu respuesta"
+                class="arv-form-input"
+              />
+            </div>
+
+
+            <div class="arv-space-down">
+              <label for="message" class="arv-form-label">
+                Experiencia laboral previa
+              </label>
+              <textarea
+                rows="6"
+                name="work-experience"
+                id="work-experience"
+                class="arv-form-input"
+                required
+              ></textarea>
+            </div>
+
+
+            <div class="arv-space-down">
+              <div class="arv-form-file-flex">
+                <label for="upload" class="arv-form-label">
+                  Identificación o pasaporte
+                </label>
+                  <input
+                    type="file"
+                    name="upload"
+                    id="upload-es"
+                    class="arv-form-file"
+                    accept=".pdf, .png, .jpg, jpeg"
+                  />
+              </div>
+            </div>
+
+            <script>
+
+
+              var fileInput = document.getElementById('upload-es');
+
+              fileInput.addEventListener('change', function(event) {
+
+                var file = event.target.files[0];
+
+                if (file) {
+
+                  var extension = file.name.split('.').pop().toLowerCase();
+
+                  if (extension !== 'pdf' && extension !== 'jpg' && extension !== 'png' && extension !== 'jpeg') {
+
+                    alert("Lo sentimos, solo el formato pdf, jpg o png es soportado");
+
+                    fileInput.value = '';
+                    
+                  }
+                }
+              });
+
+            </script>
+
+          <button class="arv-btn" id="capture-btn">Aplicar ahora</button>
+
+
+        </form>
+      </div>
+    </div>
+    <footer>
+      <p class="copyright">© Copyright 2023 Arv System Corp. All rights reserved.</p>
+    </footer>
+  </body>
+
+
+  <a id="scroll-up" href="" class="scroll-up">
+    <i class="fal fa-chevron-up"></i>
+  </a>
+  
+  
+
+
+</html>
