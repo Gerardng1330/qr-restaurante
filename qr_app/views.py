@@ -62,7 +62,6 @@ def edit_profile(request):
     }
     return render(request, 'edit_profile.html', context)
 
-@login_required
 def register(request):
     cards = card.objects.all()
 
