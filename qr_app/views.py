@@ -432,7 +432,7 @@ def side(request):
 
 def qr_code_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR
-    local_url = "https://www.google.com/"
+    local_url = "https://qr-restaurante.onrender.com/galipan"
 
     # Crear el código QR
     qr = qrcode.QRCode(
@@ -455,7 +455,7 @@ def qr_code_view(request):
 
 def muelle_qr_view(request):
     # URL a la que deseas redirigir cuando se escanea el código QR
-    local_url = "http://127.0.0.1:2000/muelle_qr"
+    local_url = "https://qr-restaurante.onrender.com/muelle"
 
     # Crear el código QR
     qr = qrcode.QRCode(
