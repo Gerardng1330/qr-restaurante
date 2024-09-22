@@ -8,6 +8,9 @@ from . import views
 urlpatterns = [
     #agregar y elminar cartas
     path('add/', views.add_card, name='add_card'),
+    #eliminar
+    path('add/', views.add_card, name='add_card'),
+
     path('prueba/',views.add_card, name='prueba'),
     path('f2f/',views.f2f, name='f2f'),
     path('delete/<int:card_id>/', views.delete_card, name='delete_card'),
