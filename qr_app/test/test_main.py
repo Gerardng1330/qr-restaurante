@@ -19,6 +19,7 @@ def test_login_password_valid_user(client, django_user_model):
     
     url = reverse('login_password')
     response = client.post(url, {'username': 'validuser', 'password': 'ng133020'})
+    response = client.post(url, {'username': 'validuser', 'password': 'ng133020'})
     
     assert response.status_code == 302
     assert response.url == reverse('prueba')  # Cambia 'prueba' al nombre de la URL de redirección correcta
